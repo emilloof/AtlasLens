@@ -1,6 +1,6 @@
 The main idea is a map where you upload photos which then are displayed on the map (where it was taken) and you can click and view the photos.
 
-Functional and technological specifications:
+## Functional and technological specifications:
 
 1. Viewing world map
 2. Viewing photos from each cities
@@ -8,3 +8,9 @@ Functional and technological specifications:
 4. Upload photo function
 5. Socials (follow, view others photos)
 6. Hosted database
+
+## Tech Stack
+
+- FE: Next.js
+- BE: Next.js
+- DATABASE: SQLite
