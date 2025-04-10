@@ -1,0 +1,43 @@
+.inputWrapper {
+  display: flex;
+  gap: 16px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Input Sizes */
+.s {
+  padding: 6px 10px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.m {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  margin-left: 12px;
+}
+
+.l {
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+  margin-left: 16px;
+}
+
+/* Optional: focus state */
+.s:focus,
+.m:focus,
+.l:focus {
+  border-color: #0070f3;
+  outline: none;
+}
