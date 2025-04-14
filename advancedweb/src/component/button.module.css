@@ -23,11 +23,12 @@
 }
 
 .l {
+  width: 320px;
   padding: 10px 20px;
   font-size: 16px;
   border: none;
   border-radius: 6px;
-  background-color: var(--color-04);
+  background-color: var(--color-03);
   color: white;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -36,5 +37,5 @@
 .s:hover,
 .m:hover,
 .l:hover {
-  background-color: #005bb5;
+  background-color: var(--color-04);
 }
