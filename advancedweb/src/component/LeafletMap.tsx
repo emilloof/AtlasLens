@@ -6,7 +6,7 @@ import L from 'leaflet'
 import { useEffect, useState } from 'react'
 import exampleImage from '../public/MyPhoto.jpg'
 import Image from 'next/image'
-
+import Input from "@/component/input";
 
 
 // Fix: Markers don't show up without this in Next.js
@@ -21,11 +21,11 @@ L.Icon.Default.mergeOptions({
 var smileyIcon = L.icon({
   iconUrl: 'https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAxL3Jhd3BpeGVsb2ZmaWNlMThfYV9jdXRlXzNkX29mX2FfbGlrZV9lbW9qaV9pc29sYXRlZF9vbl9hX3doaXRlX18wMTI4NDc0Ny1hNTc3LTRmYmEtYjZjNS02YjBhMzc3MmEzOWIucG5n.png',
 
-  iconSize:     [80, 80], // size of the icon
-  shadowSize:   [50, 64], // size of the shadow
-  iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-  shadowAnchor: [4, 62],  // the same for the shadow
-  popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+  iconSize:     [80, 80], 
+  shadowSize:   [50, 64], 
+  iconAnchor:   [22, 94], 
+  shadowAnchor: [4, 62],  
+  popupAnchor:  [-3, -76] 
 });
 
 
@@ -33,10 +33,9 @@ var smileyIcon = L.icon({
 export default function LeafletMap() {
   const [position, setPosition] = useState<[number, number] | null>([58.4059049, 15.5992799])
 
-   // Define the bounds for the entire world
    const worldBounds: [[number, number], [number, number]] = [
-    [-90, -180], // Southwest corner (latitude, longitude)
-    [90, 180],   // Northeast corner (latitude, longitude)
+    [-90, -180], 
+    [90, 180],   
   ];
 
   useEffect(() => {
@@ -44,7 +43,6 @@ export default function LeafletMap() {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           const coords: [number, number] = [pos.coords.latitude, pos.coords.longitude]
-          console.log('Got location:', coords)
           setPosition(coords)
           
         },
@@ -52,8 +50,6 @@ export default function LeafletMap() {
           console.error('Error getting location:', error.message)
         }
       )
-    } else {
-      console.log('Geolocation is not supported by this browser.')
     }
   }, [])
   
@@ -62,16 +58,16 @@ export default function LeafletMap() {
       center={position ?? [0, 0]}
       zoom={6}
       scrollWheelZoom={true}
-      minZoom={2.3} // prevent zooming too far out
+      minZoom={2.3} 
       style={{ height: '100vh', width: '100%' }}
       maxBounds={worldBounds}
       maxBoundsViscosity={1.0}
-      worldCopyJump={false} // prevents repeating the map
+      worldCopyJump={false} 
     >
+      
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
         attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
-        //noWrap={true}  prevents repeating the map
       />
       {position && <Marker position={position}></Marker>}
       {/*  <Marker position={[37.7562, -122.443]} icon={smileyIcon}>
