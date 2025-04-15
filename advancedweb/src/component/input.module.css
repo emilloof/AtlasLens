@@ -1,0 +1,45 @@
+@import "../styles/color.css";
+
+.label {
+  font-weight: 500;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: baseline;
+}
+
+/* Input Sizes */
+.s {
+  padding: 6px 10px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.m {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+}
+
+.l {
+  width: 320px;
+  padding: 10px 14px;
+  font-size: 16px;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+}
+
+.s:focus,
+.m:focus,
+.l:focus {
+  border: var(--color-03);
+  outline: none;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 12px;
+}
