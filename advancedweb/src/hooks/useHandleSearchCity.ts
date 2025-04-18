@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function useHandleSearchCity() {
 
     const [city, setCity] = useState("");
-    const [responseText, setResponseText] = useState<string>(""); // State to store the response text
+    const [responseText, setResponseText] = useState<string>(""); 
     const [loading, setLoading] = useState<boolean>(false);
 
     const handleSearch = async (e: React.FormEvent) => {
