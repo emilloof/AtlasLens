@@ -34,9 +34,11 @@ a {
   text-decoration: none;
 }
 
-.leaflet-popup-content-wrapper {
-  padding: 2pc !important; /* Force it */
+.map-album .leaflet-popup-content-wrapper {
+  padding: 24px !important;
   border-radius: 55px !important;
+  padding-right: 33px !important;
+  padding-bottom: 43px !important;
 }
 
 /* 
