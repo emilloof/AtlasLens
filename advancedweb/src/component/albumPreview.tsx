@@ -1,17 +1,21 @@
 import React from 'react';
 import styles from './albumPreview.module.css';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 interface AlbumPreviewProps {
   images: string[];
   width?: number;
   height?: number;
+  interact?: boolean;
 }
 
-const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height = 100 }) => {
+const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height = 100, interact = false }) => {
   images = images.slice(0, 5);
+  const router = useRouter();
+
   return (
-    <div className={styles.stack} style={{ width, height }} onClick={() => {/*Handle album click*/}}>
+    <div className={`${styles.stack} ${interact ? styles.interact : ''}`} style={{ width, height }} onClick={() => {/*Handle album click*/ router.push("/view")}}>
       {images.map((src, index) => (
         <Image
           key={index}
@@ -19,7 +23,7 @@ const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height
           alt={`Photo ${index + 1}`}
           className={styles.photo}
           width={width}
-          height={height}
+           height={height}
           style={{
             zIndex: images.length - index,
             top: index * 5,

@@ -13,7 +13,7 @@ export default function Create() {
         <div className={styles.pageWrapper}>
             <section className={styles.inputWrapper}>
 
-                <UploadPhotos onUpload={(files) => {/*Handle uploaded pictures */}} />
+                <UploadPhotos onUpload={(files) => {/* Handle uploaded pictures */}} />
             <form className={styles.formWrapper} onSubmit={handleSearch}>
                 <Input
                     size="l"    

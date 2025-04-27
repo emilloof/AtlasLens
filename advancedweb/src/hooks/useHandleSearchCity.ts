@@ -9,9 +9,9 @@ export default function useHandleSearchCity() {
 
     const handleSearch = async (e: React.FormEvent) => {
         e.preventDefault();
-        const apiUrl = `https://api.api-ninjas.com/v1/city?name=${city}`;
+        const apiUrl = `https://api.api-ninjas.com/v1/city?name=${city.trim()}`;
         const apiKey = '2uULXu9xcw2JZdx1O+zijw==GXEjkhEesAESQ9wn';
-    
+        
         try {
             setLoading(true);
             const response = await fetch(apiUrl, {

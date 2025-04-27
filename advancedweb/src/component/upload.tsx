@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import Button from './button';
+import AlbumPreview from './albumPreview';
 
 interface UploadPhotosProps {
   onUpload: (files: File[]) => void;
@@ -31,7 +32,7 @@ const UploadPhotos: React.FC<UploadPhotosProps> = ({ onUpload }) => {
   };
 
   return (
-    <div className="upload-container">
+    <div className="upload-container" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
       <label>
         <input
           type="file"
@@ -42,17 +43,10 @@ const UploadPhotos: React.FC<UploadPhotosProps> = ({ onUpload }) => {
           ref={fileInputRef} />
       </label>
 
-      {previews.length > 0 && (
-        <div>
-          {previews.map((url, idx) => (
-            <img
-              key={idx}
-              src={url}
-              alt={`preview-${idx}`}
-              style={{ width: '50px', height: 'auto' }} />
-          ))}
-        </div>
-      )}
+    <div style={{marginBottom: '30px'}}>
+      <AlbumPreview images={previews} width={120} height={80} /> 
+    </div>
+
       <Button
             name="Upload Photos"
             size='m'

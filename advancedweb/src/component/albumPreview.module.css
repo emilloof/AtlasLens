@@ -1,7 +1,7 @@
 .stack {
     position: relative;
     cursor: pointer;
-  }
+   }
   
   .photo {
     position: absolute;
@@ -14,6 +14,6 @@
   }
   
   
-  .photo:hover {
+  .interact .photo:hover {
     transform: scale(1.02) rotate(1deg) !important;
   }

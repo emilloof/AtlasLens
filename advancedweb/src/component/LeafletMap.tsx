@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import exampleImage from '../public/MyPhoto.jpg'
 import Image from 'next/image'
 import Input from "@/component/input";
+import AlbumPreview from './albumPreview'
 
 
 // Fix: Markers don't show up without this in Next.js
@@ -70,13 +71,13 @@ export default function LeafletMap() {
         attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
       />
       {position && <Marker position={position}></Marker>}
-      {/*  <Marker position={[37.7562, -122.443]} icon={smileyIcon}>
-          <Popup>
+        <Marker position={[37.7562, -122.443]} icon={smileyIcon} >
+          <Popup className='map-album'>
             <div>
-              <Image src={exampleImage} alt="image" width={100} height={100}/>
+            <AlbumPreview images={[exampleImage.src, exampleImage.src, exampleImage.src]} width={150} height={100} interact={true} />
             </div>
           </Popup> 
-      </Marker> */}
+      </Marker>
     </MapContainer>
   )
 }
