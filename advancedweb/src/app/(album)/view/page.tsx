@@ -17,8 +17,7 @@ export default function Album({params}: {params: {albumId: string}}) {
     return (
         <div className={styles.pageWrapper}>
             <Button name="Back" size="m" handleButtonClick={() => {router.push("/map")}} />
-                <div >
-            <Gallery imagePaths={exampleImagePaths} /></div>
+            <Gallery imagePaths={exampleImagePaths} />
         </div>
     )
 };
