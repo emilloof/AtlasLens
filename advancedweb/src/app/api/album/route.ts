@@ -9,9 +9,9 @@ export async function GET(req: Request) {
   }
 
   try {
-    const album = await prisma.Album.findUnique({
+    const album = await prisma.album.findUnique({
       where: {
-        albumId: albumId,
+        album_id: albumId,
       },
     });
 

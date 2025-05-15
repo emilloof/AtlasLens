@@ -9,7 +9,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const album = await prisma.Album.findUnique({
+    const album = await prisma.album.findUnique({
       where: {
         album_id: album_id,
       },

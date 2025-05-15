@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { authService } from "@/services/authService";
 
 export default function useHandleLogin() {
   const [id, setId] = useState("");
@@ -31,21 +32,13 @@ export default function useHandleLogin() {
       try {
         setIsLoading(true);
 
-        const response = await fetch("/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id, password }),
-        });
+        const { error } = await authService.login({ id, password });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          throw new Error(data.message || "Login failed");
+        if (error) {
+          throw new Error(error);
         }
 
-        setLoginSuccessMessage("Welcome to ~");
+        setLoginSuccessMessage(`Welcome to ??`);
 
         // Optional: Store user info in localStorage or context if needed
         // localStorage.setItem("userId", id);
