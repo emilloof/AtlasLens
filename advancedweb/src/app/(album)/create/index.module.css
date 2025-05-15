@@ -1,0 +1,18 @@
+.inputWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+  
+    width: 70%;
+  }
+  
+  .pageWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
