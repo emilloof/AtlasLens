@@ -24,7 +24,6 @@ export default function useHandleLogin() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // Clear any previous errors
     setErrorMessage({});
     setLoginSuccessMessage("");
 
@@ -40,12 +39,11 @@ export default function useHandleLogin() {
 
         setLoginSuccessMessage(`Welcome to ??`);
 
-        // Optional: Store user info in localStorage or context if needed
-        // localStorage.setItem("userId", id);
+        setId("");
+        setPassword("");
 
-        // Redirect to dashboard or home page after successful login
         setTimeout(() => {
-          router.push("/map"); // Change this to your desired redirect path
+          router.push("/map");
         }, 1000);
       } catch (error) {
         setErrorMessage({

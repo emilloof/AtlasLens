@@ -1,6 +1,6 @@
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
-interface ApiResponse<T = any> {
+export interface ApiResponse<T = any> {
   data: T | null;
   error: string | null;
   status: number;

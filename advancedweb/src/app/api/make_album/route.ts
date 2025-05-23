@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const response = NextResponse.json({ message: "Adding album successful" });
+  const response = NextResponse.json({ message: "Adding album successful", status: 200 });
 
   return response;
 }

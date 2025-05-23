@@ -11,7 +11,7 @@ interface LoginResponse {
 }
 
 interface RegisterData {
-  user_name: string;
+  userName: string;
   id: string;
   password: string;
 }
@@ -21,5 +21,17 @@ export const authService = {
     apiRequest<LoginResponse>("login", {
       method: "POST",
       body: credentials,
+    }),
+
+  signup: (userData: RegisterData): Promise<ApiResponse<LoginResponse>> =>
+    apiRequest<LoginResponse>("signup", {
+      method: "POST",
+      body: userData,
+    }),
+
+  signout: (): Promise<ApiResponse<void>> =>
+    apiRequest<void>("logout", {
+      method: "POST",
+      body: {},
     }),
 };
