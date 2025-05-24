@@ -2,8 +2,10 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-
-const SECRET_KEY = process.env.JWT_SECRET || "eifjsdlkfjkj231$@";
+const SECRET_KEY = process.env.JWT_SECRET;
+if (!SECRET_KEY) {
+  throw new Error("JWT_SECRET environment variable is not set.");
+}
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();

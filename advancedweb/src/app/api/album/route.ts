@@ -18,6 +18,8 @@ export async function GET(req: Request) {
     if (!album) {
       return NextResponse.json({ message: "Album not found" }, { status: 404 });
     }
+
+    return NextResponse.json({ data: album }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: `Internal Server Error. ${error}` }, { status: 500 });
   }
