@@ -8,9 +8,9 @@ const SECRET_KEY = process.env.SECRET_KEY || "slifjlej35434#$%@";
 
 export async function POST(req: NextRequest) {
   try {
-    const { username, password, user_id } = await req.json();
+    const { username, password, email } = await req.json();
 
-    if (!username || !password || !user_id) {
+    if (!username || !password || !email) {
       return NextResponse.json({ message: "Username and password are required" }, { status: 400 });
     }
 
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         username,
         password: hashedPassword,
         id: crypto.randomUUID(), //random string
-        user_id: user_id,
+        email: email,
       },
     });
 

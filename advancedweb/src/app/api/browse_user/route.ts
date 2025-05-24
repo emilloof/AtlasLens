@@ -3,15 +3,15 @@ import { prisma } from "@/libs/prisma";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const userId = searchParams.get("userId");
-  if (!userId) {
+  const email = searchParams.get("email");
+  if (!email) {
     return NextResponse.json({ message: "No queryparams recieved" }, { status: 400 });
   }
 
   try {
     const user = await prisma.user.findUnique({
       where: {
-        user_id: userId,
+        email: email,
       },
     });
 

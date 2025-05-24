@@ -1,18 +1,18 @@
 import { apiRequest, ApiResponse } from "./api-clients";
 
 interface LoginCredentials {
-  id: string;
+  email: string;
   password: string;
 }
 
 interface LoginResponse {
-  userId: string;
+  email: string;
   token?: string;
 }
 
 interface RegisterData {
   userName: string;
-  id: string;
+  email: string;
   password: string;
 }
 

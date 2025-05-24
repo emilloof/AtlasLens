@@ -2,7 +2,7 @@ import { apiRequest, ApiResponse } from "./api-clients";
 
 interface UserProfile {
   id: string;
-  name: string;
+  user_name: string;
   email: string;
 }
 

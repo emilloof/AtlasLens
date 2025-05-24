@@ -6,18 +6,18 @@ import bcrypt from "bcryptjs";
 const SECRET_KEY = process.env.JWT_SECRET || "eifjsdlkfjkj231$@";
 
 export async function POST(req: Request) {
-  const { id, password } = await req.json();
+  const { email, password } = await req.json();
 
   try {
     const user = await prisma.user.findUnique({
-      where: { user_id: id },
+      where: { email: email },
     });
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
     }
 
-    const token = jwt.sign({ id }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
 
     const response = NextResponse.json({ message: "Login successful", status: 200 });
     console.log("response", response);

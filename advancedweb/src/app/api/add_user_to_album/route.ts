@@ -27,7 +27,9 @@ export async function POST(req: Request) {
       },
     });
     if (existing) {
+      return NextResponse.json({ message: "User already added to album" }, { status: 400 });
     }
+
     const userAlbum = await prisma.userAlbum.create({
       data: {
         userId: user_id,
