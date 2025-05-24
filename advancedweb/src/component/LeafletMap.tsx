@@ -4,7 +4,6 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useState } from "react";
-import exampleImage from "../public/MyPhoto.jpg";
 
 import AlbumPreview from "./albumPreview";
 
@@ -17,14 +16,9 @@ L.Icon.Default.mergeOptions({
 });
 
 const smileyIcon = L.icon({
-  iconUrl:
-    "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDI0LTAxL3Jhd3BpeGVsb2ZmaWNlMThfYV9jdXRlXzNkX29mX2FfbGlrZV9lbW9qaV9pc29sYXRlZF9vbl9hX3doaXRlX18wMTI4NDc0Ny1hNTc3LTRmYmEtYjZjNS02YjBhMzc3MmEzOWIucG5n.png",
+  iconUrl: "/icons8-red-dot-48.png",
 
-  iconSize: [80, 80],
-  shadowSize: [50, 64],
-  iconAnchor: [22, 94],
-  shadowAnchor: [4, 62],
-  popupAnchor: [-3, -76],
+  iconSize: [40, 40],
 });
 
 export default function LeafletMap() {
@@ -69,7 +63,13 @@ export default function LeafletMap() {
         <Popup className="map-album">
           <div>
             <AlbumPreview
-              images={[exampleImage.src, exampleImage.src, exampleImage.src]}
+              images={[
+                "/MyPhoto.jpg",
+                "/MyPhoto - kopia.jpg",
+                "/MyPhoto - kopia (2).jpg",
+                "/MyPhoto - kopia (3).jpg",
+                "/MyPhoto - kopia (4).jpg",
+              ]}
               width={150}
               height={100}
               interact={true}
