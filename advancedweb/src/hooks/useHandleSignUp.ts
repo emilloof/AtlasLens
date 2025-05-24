@@ -3,7 +3,7 @@ import { authService } from "@/services/authService";
 import { FormEvent, useState } from "react";
 
 export default function useHandleSignUp() {
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +15,7 @@ export default function useHandleSignUp() {
 
   const validate = () => {
     const newErrors: typeof errorMessage = {};
-    if (!id.includes("@")) newErrors.idError = "Invalid email format.";
+    if (!email.includes("@")) newErrors.idError = "Invalid email format.";
     if (password.length < 6) newErrors.passwordError = "Password must be at least 6 characters.";
     if (userName === "") newErrors.nameError = "Please enter your name.";
     setErrorMessage(newErrors);
@@ -33,12 +33,12 @@ export default function useHandleSignUp() {
 
     try {
       setIsLoading(true);
-      const res = await authService.signup({ userName, id, password });
+      const res = await authService.signup({ userName, email, password });
 
       if (res.status === 200) {
         setSigninSuccessMessage("🎉 Sign up successful! Welcome aboard.");
 
-        setId("");
+        setEmail("");
         setUserName("");
         setPassword("");
       } else {
@@ -56,8 +56,8 @@ export default function useHandleSignUp() {
   };
 
   return {
-    id,
-    setId,
+    email,
+    setEmail,
     userName,
     setUserName,
     password,

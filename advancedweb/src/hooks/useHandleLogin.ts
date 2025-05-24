@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { authService } from "@/services/authService";
 
 export default function useHandleLogin() {
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState<{ idError?: string; passwordError?: string; serverError?: string }>(
     {}
@@ -15,7 +15,7 @@ export default function useHandleLogin() {
 
   const validate = () => {
     const newErrors: typeof errorMessage = {};
-    if (!id.includes("@")) newErrors.idError = "Invalid email format.";
+    if (!email.includes("@")) newErrors.idError = "Invalid email format.";
     if (password.length < 6) newErrors.passwordError = "Password must be at least 6 characters.";
     setErrorMessage(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -31,15 +31,15 @@ export default function useHandleLogin() {
       try {
         setIsLoading(true);
 
-        const { error } = await authService.login({ id, password });
+        const { error } = await authService.login({ email, password });
 
         if (error) {
           throw new Error(error);
         }
 
-        setLoginSuccessMessage(`Welcome to ??`);
+        setLoginSuccessMessage(`Welcome to AtlasLens`);
 
-        setId("");
+        setEmail("");
         setPassword("");
 
         setTimeout(() => {
@@ -56,8 +56,8 @@ export default function useHandleLogin() {
   };
 
   return {
-    id,
-    setId,
+    email,
+    setEmail,
     password,
     setPassword,
     loginSuccessMessage,
