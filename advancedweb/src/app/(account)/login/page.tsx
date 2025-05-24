@@ -4,7 +4,7 @@ import Input from "@/component/input";
 import styles from "./index.module.css";
 import useHandleLogin from "@/hooks/useHandleLogin";
 export default function Login() {
-  const { id, setId, password, setPassword, loginSuccessMessage, handleSubmit, errorMessage } = useHandleLogin();
+  const { email, setEmail, password, setPassword, loginSuccessMessage, handleSubmit, errorMessage } = useHandleLogin();
 
   return (
     <div className={styles.pageWrapper}>
@@ -13,8 +13,8 @@ export default function Login() {
           size="l"
           label="id"
           placeholder="Please enter the id"
-          onChange={(e) => setId(e.target.value)}
-          value={id}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           type="text"
           errorMessage={errorMessage.idError}
         />

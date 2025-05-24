@@ -4,8 +4,17 @@ import Input from "@/component/input";
 import styles from "./index.module.css";
 import useHandleSignUp from "@/hooks/useHandleSignUp";
 export default function SignUp() {
-  const { id, setId, name, setName, password, setPassword, signinSuccessMessage, handleSubmit, errorMessage } =
-    useHandleSignUp();
+  const {
+    email,
+    setEmail,
+    userName,
+    setUserName,
+    password,
+    setPassword,
+    signinSuccessMessage,
+    handleSubmit,
+    errorMessage,
+  } = useHandleSignUp();
 
   return (
     <div className={styles.pageWrapper}>
@@ -14,8 +23,8 @@ export default function SignUp() {
           size="l"
           label="id"
           placeholder="Please enter the id"
-          onChange={(e) => setId(e.target.value)}
-          value={id}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           type="text"
           errorMessage={errorMessage.idError}
         />
@@ -23,8 +32,8 @@ export default function SignUp() {
           size="l"
           label="name"
           placeholder="Please enter the name"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
+          onChange={(e) => setUserName(e.target.value)}
+          value={userName}
           type="text"
           errorMessage={errorMessage.nameError}
         />
