@@ -33,24 +33,23 @@ export default function useHandleSignUp() {
 
     try {
       setIsLoading(true);
-      const { res } = await authService.signup({ userName, id, password });
+      const res = await authService.signup({ userName, id, password });
 
-      if (res.ok) {
+      if (res.status === 200) {
         setSigninSuccessMessage("🎉 Sign up successful! Welcome aboard.");
 
         setId("");
         setUserName("");
         setPassword("");
       } else {
-        if (res.error?.fields) {
-          setErrorMessage(res.error.fields);
+        if (res.error) {
+          setSigninSuccessMessage(res.error);
         } else {
-          setErrorMessage({ nameError: res.error?.message || "Sign up failed." });
-        } //name error 말고 general error 로 바꿔야함
+          setSigninSuccessMessage("");
+        }
       }
-    } catch (err) {
-      setErrorMessage({ nameError: "Network error. Please try again." });
-      console.log(err);
+    } catch {
+      setSigninSuccessMessage("Network error. Please try again.");
     } finally {
       setIsLoading(false);
     }

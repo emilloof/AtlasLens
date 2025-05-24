@@ -1,6 +1,6 @@
 type HttpMethod = "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T> {
   data: T | null;
   error: string | null;
   status: number;
@@ -33,6 +33,12 @@ export async function apiRequest<T>(endpoint: string, options: ApiRequestOptions
         status: response.status,
       };
     }
+
+    return {
+      data,
+      error: null,
+      status: response.status,
+    };
   } catch (error) {
     return {
       data: null,

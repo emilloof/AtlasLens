@@ -58,5 +58,5 @@ export const userService = {
     apiRequest<void>(`user/${userId}`, {
       method: "DELETE",
     }),
-  getMyMap: (userId: string): Promise<ApiResponse<Album[]>> => apiRequest<Album[]>(`mymap`),
+  getMyMap: (): Promise<ApiResponse<Album[]>> => apiRequest<Album[]>(`mymap`),
 };

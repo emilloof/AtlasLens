@@ -27,7 +27,7 @@ export default function useHandleSearchCity() {
         setResponseText("City not found.");
       }
     } catch (error) {
-      setResponseText("City not found.");
+      setResponseText(`City not found. ${error}`);
     }
   };
 
