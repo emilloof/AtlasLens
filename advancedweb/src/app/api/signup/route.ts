@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       data: {
         username,
         password: hashedPassword,
-        id: crypto.randomUUID(), //random string
+        user_id: crypto.randomUUID(), //random string
         email: email,
       },
     });
