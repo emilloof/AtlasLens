@@ -8,7 +8,8 @@ type userAlbumType = {
   user?: User;
   album?: Album;
 };
-export async function GET(req: Request, userId: string) {
+export async function POST(req: Request) {
+  const { userId } = await req.json();
   try {
     const userAlbums = await prisma.userAlbum.findMany({
       where: {
@@ -16,11 +17,15 @@ export async function GET(req: Request, userId: string) {
       },
       include: {
         //take connected info as well
-        album: true,
+        album: {include: {
+            images: {
+              take: 5, // Get only the first 5 images
+            },
+          },},
       },
     });
 
-    return userAlbums.map((userAlbum: userAlbumType) => userAlbum.album);
+    return NextResponse.json(userAlbums.map((userAlbum: userAlbumType) => userAlbum.album));
   } catch (error) {
     return NextResponse.json({ message: `Invalid credentials.${error}` }, { status: 401 });
   }

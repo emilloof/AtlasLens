@@ -8,14 +8,15 @@ interface AlbumPreviewProps {
   width?: number;
   height?: number;
   interact?: boolean;
+  albumID?: string;
 }
 
-const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height = 100, interact = false }) => {
+const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height = 100, interact = false, albumID }) => {
   images = images.slice(0, 5);
   const router = useRouter();
 
   return (
-    <div className={`${styles.stack} ${interact ? styles.interact : ''}`} style={{ width, height }} onClick={() => {/*Handle album click*/ router.push("/view")}}>
+    <div className={`${styles.stack} ${interact ? styles.interact : ''}`} style={{ width, height }} onClick={() => {/*Handle album click*/ router.push("/view/" + albumID)}}>
       {images.map((src, index) => (
         <Image
           key={index}
