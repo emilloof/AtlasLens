@@ -44,39 +44,41 @@ export default function LeafletMap() {
   }, []);
 
   return (
-    <MapContainer
-      center={position ?? [0, 0]}
-      zoom={6}
-      scrollWheelZoom={true}
-      minZoom={2.3}
-      style={{ height: "100vh", width: "100%" }}
-      maxBounds={worldBounds}
-      maxBoundsViscosity={1.0}
-      worldCopyJump={false}
-    >
-      <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
-      />
-      {position && <Marker position={position}></Marker>}
-      <Marker position={[37.7562, -122.443]} icon={smileyIcon}>
-        <Popup className="map-album">
-          <div>
-            <AlbumPreview
-              images={[
-                "/MyPhoto.jpg",
-                "/MyPhoto - kopia.jpg",
-                "/MyPhoto - kopia (2).jpg",
-                "/MyPhoto - kopia (3).jpg",
-                "/MyPhoto - kopia (4).jpg",
-              ]}
-              width={150}
-              height={100}
-              interact={true}
-            />
-          </div>
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div style={{ height: "100vh", width: "100vw" }}>
+      <MapContainer
+        center={position ?? [0, 0]}
+        zoom={6}
+        scrollWheelZoom={true}
+        minZoom={2.3}
+        style={{ height: "100vh", width: "100%", position: "static" }}
+        maxBounds={worldBounds}
+        maxBoundsViscosity={1.0}
+        worldCopyJump={false}
+      >
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
+        />
+        {position && <Marker position={position}></Marker>}
+        <Marker position={[37.7562, -122.443]} icon={smileyIcon}>
+          <Popup className="map-album">
+            <div>
+              <AlbumPreview
+                images={[
+                  "/MyPhoto.jpg",
+                  "/MyPhoto - kopia.jpg",
+                  "/MyPhoto - kopia (2).jpg",
+                  "/MyPhoto - kopia (3).jpg",
+                  "/MyPhoto - kopia (4).jpg",
+                ]}
+                width={150}
+                height={100}
+                interact={true}
+              />
+            </div>
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   );
 }

@@ -3,7 +3,9 @@ import Button from "@/component/button";
 import Input from "@/component/input";
 import styles from "./index.module.css";
 import useHandleSignUp from "@/hooks/useHandleSignUp";
+import { useRouter } from "next/navigation";
 export default function SignUp() {
+  const router = useRouter();
   const {
     email,
     setEmail,
@@ -14,6 +16,7 @@ export default function SignUp() {
     signinSuccessMessage,
     handleSubmit,
     errorMessage,
+    isSignedUp,
   } = useHandleSignUp();
 
   return (
@@ -46,7 +49,11 @@ export default function SignUp() {
           onChange={(e) => setPassword(e.target.value)}
           errorMessage={errorMessage.passwordError}
         />
-        <Button name="signup" size="l" handleButtonClick={handleSubmit} />
+        <Button
+          name={isSignedUp ? "Go to Mymap" : "signup"}
+          size="l"
+          handleButtonClick={isSignedUp ? () => router.push("/map") : handleSubmit}
+        />
         <p className={styles.successMessage}>{signinSuccessMessage}</p>
       </section>
     </div>

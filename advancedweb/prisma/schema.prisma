@@ -41,5 +41,4 @@ model Image {
   album    Album  @relation(fields: [albumId], references: [album_id])
   albumId  String
   created_at DateTime @default(now())
-
 }

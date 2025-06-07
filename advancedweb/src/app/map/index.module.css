@@ -1,0 +1,8 @@
+.buttonWrapper {
+  position: fixed;
+  z-index: 9999;
+  margin: 36px;
+  display: flex;
+  justify-content: end;
+  right: 0px;
+}
