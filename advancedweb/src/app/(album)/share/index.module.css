@@ -53,3 +53,10 @@
     left: 25;
     z-index: 10; /* optional, to keep it above other content */
 }
+
+.suggestionBox{
+    outline: 2px solid #1b1a55;
+    position : relative;
+    display: flex;
+    justify-content: space-between;
+}

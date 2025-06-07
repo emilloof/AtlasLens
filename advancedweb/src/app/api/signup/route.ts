@@ -8,9 +8,9 @@ const SECRET_KEY = process.env.SECRET_KEY || "slifjlej35434#$%@";
 
 export async function POST(req: NextRequest) {
   try {
-    const { username, password, email } = await req.json();
+    const { userName, password, email } = await req.json();
 
-    if (!username || !password || !email) {
+    if (!userName || !password || !email) {
       return NextResponse.json({ message: "Username and password are required" }, { status: 400 });
     }
 
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     // store data in db
     await prisma.user.create({
       data: {
-        username,
+        username: userName,
         password: hashedPassword,
         user_id: crypto.randomUUID(), //random string
         email: email,
@@ -28,11 +28,12 @@ export async function POST(req: NextRequest) {
     });
 
     // JWT token
-    const token = jwt.sign({ username }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ userName }, SECRET_KEY, { expiresIn: "1h" });
 
     const response = NextResponse.json({ message: "Signup successful" }, { status: 200 });
 
     // put token to cookie
+      
     response.cookies.set("access_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
