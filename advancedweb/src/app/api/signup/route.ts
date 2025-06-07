@@ -28,12 +28,12 @@ export async function POST(req: NextRequest) {
     });
 
     // JWT token
-    const token = jwt.sign({ userName }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
 
     const response = NextResponse.json({ message: "Signup successful" }, { status: 200 });
 
     // put token to cookie
-      
+
     response.cookies.set("access_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
