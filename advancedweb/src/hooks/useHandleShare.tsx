@@ -84,7 +84,7 @@ export default function useHandleShare(albumId: string) {
     useEffect(() => {
         fetchImages();
     }, []);
-    
+
     return {
         search,
         setSearch,
@@ -93,6 +93,8 @@ export default function useHandleShare(albumId: string) {
         setSelectedPhotos,
         sharedUsers,
         fetchAlbum,
-        images, // Expose images to the component
+        images,
+        fetchImages,
+
     }
 }

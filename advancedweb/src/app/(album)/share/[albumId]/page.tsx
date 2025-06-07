@@ -12,18 +12,9 @@ import React from 'react';
 export default function Share({params}: {params: Promise<{albumId: string}>}) {
 
     // Fetch the images from the server using the albumId
-    const { albumId } = React.use(params); 
-    const exampleImagePaths = [ "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg" , "/MyPhoto - kopia.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg"];
-    const exampleUsers = [
-        {username: "Gaeun", id: "alice@example.com"},
-        {username: "Emil", id: "bob@example.com" },
-        {username: "Kim Lööf", id: "charlie@example.com" }
-      ];    
-    const { search, setSearch, suggestions, selectedPhotos, setSelectedPhotos, sharedUsers, fetchAlbum, images } = useHandleShare(albumId);
-    const router = useRouter();
-
-
-    
+    const { albumId } = React.use(params);   
+    const { search, setSearch, suggestions, selectedPhotos, setSelectedPhotos, sharedUsers, fetchAlbum, images, fetchImages } = useHandleShare(albumId);
+    const router = useRouter();    
     // call on this function when the user clicks the "Add" button
     // like this: handleAddUser(user.id)
     const handleAddUser = async (userId: string) => {
@@ -33,7 +24,7 @@ export default function Share({params}: {params: Promise<{albumId: string}>}) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_id: userId,
-                album_id: albumId, // from your params
+                album_id: albumId,
             }),
             });
             if (!res.ok) {
@@ -46,20 +37,41 @@ export default function Share({params}: {params: Promise<{albumId: string}>}) {
         } catch (err) {
             alert("Error adding user");
         }
-
         };
 
-        console.log("Selected photos: ", images);
+    const handleRemovePhotos = async () => {        
+        try {
+            const res = await fetch('/api/remove_image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    imageIds: selectedPhotos, //SEND ID NOT URL
+                    albumId: albumId,
+                }),
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                alert(data.message || "Failed to remove photos");
+                return;
+            }
+            alert("Photos removed!");
+            setSelectedPhotos([]); // Clear selected photos after removal
+            fetchImages(); // Update the album view
+        }   catch (err) {
+            alert("Error removing photos");
+        }
+    };
+
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.galleryButton}>
-                <Button name="Back" size="m" handleButtonClick={() => {router.push("/view")}} />
+                <Button name="Back" size="m" handleButtonClick={() => {router.push("/view/" + albumId)}} />
             </div>
             <div className={styles.gallery}>
             <h1>Album Preview</h1>  
                 <div className={styles.grid}>
                     {images.map((img, idx) => (
-                        <PhotoPreview key={idx} imageSrc={img.url} isSelected={selectedPhotos.includes(img.url)} width={80} height={80} setSelectedPhotos={setSelectedPhotos} />
+                        <PhotoPreview key={idx} imageSrc={img.url} imageID={img.image_id} isSelected={selectedPhotos.includes(img.image_id)} width={80} height={80} setSelectedPhotos={setSelectedPhotos} />
                     ))}
                 </div>
             </div>
@@ -69,7 +81,7 @@ export default function Share({params}: {params: Promise<{albumId: string}>}) {
                     <Button
                         name="Remove selected photos"
                         size="l"
-                        handleButtonClick={() => {/* your remove logic here */}}
+                        handleButtonClick={() => {handleRemovePhotos()}}
                         />
                 </div>
             )}
