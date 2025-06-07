@@ -1,41 +1,30 @@
 'use client'
 
 import AlbumPreview from '@/component/albumPreview';
-import Album from '../view/page';
+import Album from '../../view/page';
 import styles from './index.module.css'
-import Image from 'next/image';
+import { useState } from 'react';
 import Button from '@/component/button';
 import { useRouter } from 'next/navigation';
 import PhotoPreview from '@/component/photoPreview';
 import useHandleShare from '@/hooks/useHandleShare';
+import React from 'react';
 
-export default function Share({params}: {params: {albumId: string}}) {
+export default function Share({params}: {params: Promise<{albumId: string}>}) {
 
     // Fetch the images from the server using the albumId
-    const { albumId } = params;
+    const { albumId } = React.use(params); 
     const exampleImagePaths = [ "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg" , "/MyPhoto - kopia.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg", "/MyPhoto.jpg"];
     const exampleUsers = [
-        {username: "Gaeun", id: "alice@example.com" },
+        {username: "Gaeun", id: "alice@example.com"},
         {username: "Emil", id: "bob@example.com" },
         {username: "Kim Lööf", id: "charlie@example.com" }
       ];    
-    const { search, setSearch, suggestions, selectedPhotos, setSelectedPhotos } = useHandleShare();
+    const { search, setSearch, suggestions, selectedPhotos, setSelectedPhotos, sharedUsers, fetchAlbum, images } = useHandleShare(albumId);
     const router = useRouter();
 
-    const fetchAlbum = async () => {
-        try {
-            const res = await fetch(`/api/get_album?album_id=${albumId}`);
-            if (!res.ok) {
-                throw new Error("Failed to fetch album");
-            }
-            const data = await res.json();
-            // Process the album data as needed
-            console.log(data);
-        } catch (error) {
-            console.error("Error fetching album:", error);
-        }
-    }
 
+    
     // call on this function when the user clicks the "Add" button
     // like this: handleAddUser(user.id)
     const handleAddUser = async (userId: string) => {
@@ -53,14 +42,15 @@ export default function Share({params}: {params: {albumId: string}}) {
             alert(data.message || "Failed to add user");
             return;
             }
-            // Optionally update your shared users list here
-            // e.g., fetch again or update state
             alert("User added!");
+            fetchAlbum(); // Update shown shared users after adding a new user
         } catch (err) {
             alert("Error adding user");
         }
+
         };
 
+        console.log("Selected photos: ", images);
     return (
         <div className={styles.pageWrapper}>
             <div className={styles.galleryButton}>
@@ -69,8 +59,8 @@ export default function Share({params}: {params: {albumId: string}}) {
             <div className={styles.gallery}>
             <h1>Album Preview</h1>  
                 <div className={styles.grid}>
-                    {exampleImagePaths.map((src, idx) => (
-                        <PhotoPreview key={idx} imageSrc={src} isSelected={selectedPhotos.includes(src)} width={80} height={80} setSelectedPhotos={setSelectedPhotos} />
+                    {images.map((img, idx) => (
+                        <PhotoPreview key={idx} imageSrc={img.url} isSelected={selectedPhotos.includes(img.url)} width={80} height={80} setSelectedPhotos={setSelectedPhotos} />
                     ))}
                 </div>
             </div>
@@ -103,11 +93,11 @@ export default function Share({params}: {params: {albumId: string}}) {
                         {suggestions.map(user => (
                             <div className={styles.suggestionBox} key={user.id}>
                             <div style={{ display: "flex", flexDirection: "column", paddingRight: 8 }}key={user.id}>
-                            <a>Email: {user.id}</a>
+                            <a>Email: {user.email}</a>
                             <a>Username: {user.username}</a>
                             
                             </div>
-                        <Button name="Add" size="s" handleButtonClick={() => {/*Add logic here */}} />
+                        <Button name="Add" size="s" handleButtonClick={() => {handleAddUser(user.id)}} />
                     </div>
                         ))}
                       </div>
@@ -117,9 +107,9 @@ export default function Share({params}: {params: {albumId: string}}) {
                 <div className={styles.sharedWith}>
                     <h2>Album shared with</h2>
                     <ul>
-                        {exampleUsers.map(user => (
+                        {sharedUsers.map(user => (
                             <li key={user.id}>
-                                <strong>{user.username}</strong> <span>({user.id})</span>
+                                <strong>{user.username}</strong> <span>({user.email})</span>
                             </li>
                         ))}
                      </ul>

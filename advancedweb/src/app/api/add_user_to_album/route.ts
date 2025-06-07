@@ -37,7 +37,7 @@ export async function POST(req: Request) {
       },
     });
 
-    return userAlbum;
+    return NextResponse.json({message: "User successfully adde to album"}, { status: 200 });
   } catch (error) {
     console.error("fail to add user to album: ", error);
     throw error;

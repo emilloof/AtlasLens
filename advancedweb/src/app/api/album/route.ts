@@ -13,6 +13,14 @@ export async function GET(req: Request) {
       where: {
         album_id: albumId,
       },
+      include: {
+        users: {
+          include: {
+            user: true,
+          }
+        },
+        images: true,
+      },
     });
 
     if (!album) {
