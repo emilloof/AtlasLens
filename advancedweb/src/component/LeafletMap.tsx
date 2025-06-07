@@ -21,7 +21,8 @@ const smileyIcon = L.icon({
   iconSize: [40, 40],
 });
 
-export default function LeafletMap() {
+export default function LeafletMap({albums}: {albums: any[]}) {
+  console.log("Albums in LeafletMap:", albums);
   const [position, setPosition] = useState<[number, number] | null>([58.4059049, 15.5992799]);
 
   const worldBounds: [[number, number], [number, number]] = [
@@ -58,25 +59,34 @@ export default function LeafletMap() {
         url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
       />
-      {position && <Marker position={position}></Marker>}
-      <Marker position={[37.7562, -122.443]} icon={smileyIcon}>
-        <Popup className="map-album">
-          <div>
-            <AlbumPreview
+      {albums.map(album => (
+        console.log("Rendering album marker:", album),
+        <Marker
+          key={album.album_id}
+          position={[album.latitude, album.longitude]}
+          icon={smileyIcon}
+        >
+          <Popup className="map-album">
+            <div>
+              <AlbumPreview
               images={[
-                "/MyPhoto.jpg",
-                "/MyPhoto - kopia.jpg",
-                "/MyPhoto - kopia (2).jpg",
-                "/MyPhoto - kopia (3).jpg",
-                "/MyPhoto - kopia (4).jpg",
+                album.images[0]?.url || "/placeholder.png",
+                album.images[1]?.url || "/placeholder.png",
+                album.images[2]?.url || "/placeholder.png",
+                album.images[3]?.url || "/placeholder.png",
+                album.images[4]?.url || "/placeholder.png",
               ]}
               width={150}
               height={100}
               interact={true}
+              albumID={album.album_id}
             />
-          </div>
-        </Popup>
-      </Marker>
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+
+      
     </MapContainer>
   );
 }
