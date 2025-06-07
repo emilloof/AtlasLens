@@ -1,0 +1,62 @@
+.pageWrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 25px;
+}
+
+.gallery{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 750px;
+}
+
+.browse{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.sharedWith{
+    padding-top: 50px;
+}
+
+.gridImage {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 12px;
+    width: 100%;
+}
+
+.galleryButton {
+    position: absolute;
+    top: 20;
+    left: 25;
+    z-index: 10; /* optional, to keep it above other content */
+}
+
+.suggestionBox{
+    outline: 2px solid #1b1a55;
+    position : relative;
+    display: flex;
+    justify-content: space-between;
+}
