@@ -32,7 +32,6 @@ model UserAlbum {
   userId   String
   album    Album  @relation(fields: [albumId], references: [album_id])
   albumId  String
-
   @@id([userId, albumId])
 }
 
