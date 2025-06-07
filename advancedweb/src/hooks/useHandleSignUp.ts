@@ -7,6 +7,7 @@ export default function useHandleSignUp() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignedUp, setIsSignedUp] = useState(false);
   const [errorMessage, setErrorMessage] = useState<{ idError?: string; nameError?: string; passwordError?: string }>(
     {}
   );
@@ -37,6 +38,7 @@ export default function useHandleSignUp() {
 
       if (res.status === 200) {
         setSigninSuccessMessage("🎉 Sign up successful! Welcome aboard.");
+        setIsSignedUp(true);
 
         setEmail("");
         setUserName("");
@@ -66,5 +68,6 @@ export default function useHandleSignUp() {
     handleSubmit,
     errorMessage,
     isLoading,
+    isSignedUp,
   };
 }

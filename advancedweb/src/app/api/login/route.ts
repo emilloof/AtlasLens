@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-const SECRET_KEY = process.env.JWT_SECRET;
+const SECRET_KEY = process.env.SECRET_KEY;
 if (!SECRET_KEY) {
   throw new Error("JWT_SECRET environment variable is not set.");
 }
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
     }
     if (SECRET_KEY) {
-      const token = jwt.sign({ user_id: user.user_id, email: user.email }, SECRET_KEY, { expiresIn: "1h" });
+      const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
 
       const response = NextResponse.json({ message: "Login successful", status: 200 });
 

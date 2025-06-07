@@ -21,7 +21,7 @@ const smileyIcon = L.icon({
   iconSize: [40, 40],
 });
 
-export default function LeafletMap({albums}: {albums: any[]}) {
+export default function LeafletMap({ albums }: { albums: any[] }) {
   console.log("Albums in LeafletMap:", albums);
   const [position, setPosition] = useState<[number, number] | null>([58.4059049, 15.5992799]);
 
@@ -45,48 +45,48 @@ export default function LeafletMap({albums}: {albums: any[]}) {
   }, []);
 
   return (
-    <MapContainer
-      center={position ?? [0, 0]}
-      zoom={6}
-      scrollWheelZoom={true}
-      minZoom={2.3}
-      style={{ height: "100vh", width: "100%" }}
-      maxBounds={worldBounds}
-      maxBoundsViscosity={1.0}
-      worldCopyJump={false}
-    >
-      <TileLayer
-        url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-        attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
-      />
-      {albums.map(album => (
-        console.log("Rendering album marker:", album),
-        <Marker
-          key={album.album_id}
-          position={[album.latitude, album.longitude]}
-          icon={smileyIcon}
-        >
-          <Popup className="map-album">
-            <div>
-              <AlbumPreview
-              images={[
-                album.images[0]?.url || "/placeholder.png",
-                album.images[1]?.url || "/placeholder.png",
-                album.images[2]?.url || "/placeholder.png",
-                album.images[3]?.url || "/placeholder.png",
-                album.images[4]?.url || "/placeholder.png",
-              ]}
-              width={150}
-              height={100}
-              interact={true}
-              albumID={album.album_id}
-            />
-            </div>
-          </Popup>
-        </Marker>
-      ))}
-
-      
-    </MapContainer>
+    <div style={{ height: "100vh", width: "100%" }}>
+      <MapContainer
+        center={position ?? [0, 0]}
+        zoom={6}
+        scrollWheelZoom={true}
+        minZoom={2.3}
+        style={{ height: "100vh", width: "100%", position: "static" }}
+        maxBounds={worldBounds}
+        maxBoundsViscosity={1.0}
+        worldCopyJump={false}
+      >
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
+        />
+        {albums.map(
+          (album) => (
+            console.log("Rendering album marker:", album),
+            (
+              <Marker key={album.album_id} position={[album.latitude, album.longitude]} icon={smileyIcon}>
+                <Popup className="map-album">
+                  <div>
+                    <AlbumPreview
+                      images={[
+                        album.images[0]?.url || "/placeholder.png",
+                        album.images[1]?.url || "/placeholder.png",
+                        album.images[2]?.url || "/placeholder.png",
+                        album.images[3]?.url || "/placeholder.png",
+                        album.images[4]?.url || "/placeholder.png",
+                      ]}
+                      width={150}
+                      height={100}
+                      interact={true}
+                      albumID={album.album_id}
+                    />
+                  </div>
+                </Popup>
+              </Marker>
+            )
+          )
+        )}
+      </MapContainer>
+    </div>
   );
 }

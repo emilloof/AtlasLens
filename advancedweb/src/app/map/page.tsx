@@ -1,12 +1,23 @@
-'use client'
+"use client";
 
-import dynamic from 'next/dynamic'
-import useHandleMap from '@/hooks/useHandleMap'
+import Button from "@/component/button";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
+import styles from "./index.module.css";
 
-const MapComponent = dynamic(() => import('@/component/LeafletMap'), { ssr: false })
+import useHandleMap from "@/hooks/useHandleMap";
 
-export default function Page() {
-  const {albums} = useHandleMap()
-  console.log("Fetched albums:", albums)  
-  return <MapComponent albums={albums} />
+const MapComponent = dynamic(() => import("@/component/LeafletMap"), { ssr: false });
+
+export default function MapPage() {
+  const router = useRouter();
+  const { albums } = useHandleMap();
+  return (
+    <div className={styles.pageWrapper}>
+      <div className={styles.buttonWrapper}>
+        <Button name="create new album" size="m" handleButtonClick={() => router.push("/create")} />
+      </div>
+      <MapComponent albums={albums} />
+    </div>
+  );
 }

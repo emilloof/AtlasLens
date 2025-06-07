@@ -42,3 +42,5 @@ next-env.d.ts
 
 #images
 /public/uploads
+#db
+/prisma/dev.db
