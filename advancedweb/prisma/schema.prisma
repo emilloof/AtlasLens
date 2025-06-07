@@ -32,13 +32,14 @@ model UserAlbum {
   userId   String
   album    Album  @relation(fields: [albumId], references: [album_id])
   albumId  String
-
   @@id([userId, albumId])
 }
 
 model Image {
-  image_id String @id
+  image_id String @id @default(uuid())
   url      String
   album    Album  @relation(fields: [albumId], references: [album_id])
   albumId  String
+  created_at DateTime @default(now())
+
 }

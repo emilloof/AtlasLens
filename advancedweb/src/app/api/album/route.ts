@@ -17,7 +17,7 @@ export async function GET(req: Request) {
         users: {
           include: {
             user: true,
-          }
+          },
         },
         images: true,
       },

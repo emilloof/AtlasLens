@@ -1,7 +1,6 @@
 'use client'
 
 import AlbumPreview from '@/component/albumPreview';
-import Album from '../../view/page';
 import styles from './index.module.css'
 import { useState } from 'react';
 import Button from '@/component/button';

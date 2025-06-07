@@ -16,10 +16,12 @@
     "bcryptjs": "^3.0.2",
     "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
+    "multer": "^2.0.1",
     "next": "15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-image-gallery": "^1.4.0"
+    "react-image-gallery": "^1.4.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -29,6 +31,7 @@
     "@types/react-dom": "^19",
     "@types/react-image-gallery": "^1.2.4",
     "@types/react-leaflet": "^3.0.0",
+    "@types/uuid": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "prisma": "^6.6.0",
