@@ -1,3 +1,15 @@
+# SCREENCASTS
+Below is the links for our screencasts:
+
+##Project Screencast
+_____
+
+##Individual Screencasts
+###Emil Lööf (emilo851)
+https://www.youtube.com/watch?v=SlSGBTQVN3k&ab_channel=Emil
+
+
+
 The main idea is a map where you upload photos which then are displayed on the map (where it was taken) and you can click and view the photos.
 
 ## Functional and technological specifications:
