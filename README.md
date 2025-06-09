@@ -9,7 +9,7 @@ https://youtu.be/_dNZpIjni74
 https://www.youtube.com/watch?v=SlSGBTQVN3k&ab_channel=Emil
 
 ### Ga Eun Kim
-
+https://youtu.be/KQPJpPyVnbU?si=ph4C98XWJ_X0YS5y
 
 # Project Description
 
