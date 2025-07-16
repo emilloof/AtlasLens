@@ -78,7 +78,6 @@ export default function Create() {
           latitude: city?.latitude,
           longitude: city?.longitude,
           users: userId ? [userId] : [],
-          //  images: uploadedImageUrls,
         }),
       });
       const data = await res.json();
@@ -94,10 +93,6 @@ export default function Create() {
     }
   };
 
-  // const handlePhotoUploadAndAlbum = async () => {
-  //   await handlePhotoUpload(selectedFiles);
-  //   await handleAlbumUpload();
-  // };
   return (
     <div className={styles.pageWrapper}>
       <section className={styles.inputWrapper}>

@@ -10,15 +10,11 @@ export async function POST(req: Request) {
   }
 
   try {
-    // Assume `input` is your search string
-        const users = await prisma.user.findMany({
-          where: {
-            OR: [
-              { username: { startsWith: keyword} },
-              { email: { startsWith: keyword} }
-            ]
-          }
-});
+    const users = await prisma.user.findMany({
+      where: {
+        OR: [{ username: { startsWith: keyword } }, { email: { startsWith: keyword } }],
+      },
+    });
 
     if (!users || users.length === 0) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });

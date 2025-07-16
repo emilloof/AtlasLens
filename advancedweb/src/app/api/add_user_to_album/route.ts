@@ -30,14 +30,14 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "User already added to album" }, { status: 400 });
     }
 
-    const userAlbum = await prisma.userAlbum.create({
-      data: {
-        userId: user_id,
-        albumId: album_id,
-      },
-    });
+    // const userAlbum = await prisma.userAlbum.create({
+    //   data: {
+    //     userId: user_id,
+    //     albumId: album_id,
+    //   },
+    // });
 
-    return NextResponse.json({message: "User successfully adde to album"}, { status: 200 });
+    return NextResponse.json({ message: "User successfully adde to album" }, { status: 200 });
   } catch (error) {
     console.error("fail to add user to album: ", error);
     throw error;

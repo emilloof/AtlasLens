@@ -15,7 +15,9 @@ model User {
   email     String  @unique
   password  String
   username  String
+  profile_image String?
   albums    UserAlbum[]
+  likes Like[]
 }
 
 model Album {
@@ -41,4 +43,44 @@ model Image {
   album    Album  @relation(fields: [albumId], references: [album_id])
   albumId  String
   created_at DateTime @default(now())
+  comments   Comment[]
+  filter String?
+  likes Like[]
+  is_deleted Boolean @default(false)
 }
+
+model Comment {
+  comment_id   String   @id @default(uuid())
+  content      String
+  writer       User     @relation(fields: [writerId], references: [user_id])
+  writerId     String
+  created_at   DateTime @default(now())
+  image        Image    @relation(fields: [imageId], references: [image_id])
+  imageId      String
+  parent       Comment? @relation("Reply", fields: [parentId], references: [comment_id])
+  parentId     String?  // 대댓글이면 부모 댓글의 id, 아니면 null
+  replies      Comment[] @relation("Reply")
+}
+
+model Like {
+  user   User   @relation(fields: [userId], references: [user_id])
+  userId String
+  image  Image  @relation(fields: [imageId], references: [image_id])
+  imageId String
+  created_at DateTime @default(now())
+  @@id([userId, imageId]) 
+}
+
+
+model Notification {
+  notification_id String   @id @default(uuid())
+  user           User     @relation(fields: [userId], references: [user_id]) // user who will receive alarm
+  userId         String
+  type           String   // 예: "comment", "like", "invite" 등
+  message        String   // 알림 내용
+  is_read        Boolean  @default(false)
+  created_at     DateTime @default(now())
+  image_id       String?
+  comment_id     String?
+}
+

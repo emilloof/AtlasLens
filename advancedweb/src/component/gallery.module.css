@@ -4,3 +4,17 @@
   flex-direction: column;
   justify-content: flex-end;
 }
+
+.commentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  position: relative;
+}
+
+.image_gallery_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
