@@ -9,6 +9,7 @@ import { useState } from "react";
 import Comment from "./comment";
 import styles from "./gallery.module.css";
 import "../styles/filter.css";
+import CommentInput from "./commentInput";
 export interface CommentType {
   writer_name: string;
   date: string;
@@ -40,12 +41,14 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths }) => {
         <div style={{ display: "relative" }} />
         <Image
           src={item.original}
+          className={item.filter ? item.filter : ""}
           alt=""
           fill
           style={{
             objectFit: "contain",
           }}
         />
+        {isCommentOpen && <CommentInput onSubmit={(value) => {}} />}
         {isCommentOpen && item.comments?.length && (
           <div className={styles.commentWrapper}>
             {item.comments.map((comment: CommentType) => (
@@ -59,16 +62,9 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths }) => {
             ))}
           </div>
         )}
-
-        <Image
-          className={item.filter ? item.filter : ""}
-          style={{ position: "absolute", top: "60px", right: "30px", cursor: "pointer" }}
-          src={commentIcon}
-          alt="comment"
-          width={20}
-          height={20}
-          onClick={() => setIsCommentOpen((prev) => !prev)}
-        />
+        <div className={styles.commentIconWrapper}>
+          <Image src={commentIcon} alt="comment" fill onClick={() => setIsCommentOpen((prev) => !prev)} />
+        </div>
       </div>
     );
   };

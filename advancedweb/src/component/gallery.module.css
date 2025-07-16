@@ -1,4 +1,6 @@
 /* globals.css */
+@import "../styles/color.css";
+
 .image-gallery {
   display: flex;
   flex-direction: column;
@@ -17,4 +19,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.commentIconWrapper {
+  width: 7vh;
+  height: 7vh;
+  background-color: var(--color-04);
+  cursor: pointer;
+  border-radius: 20%;
+  position: absolute;
+  right: 0;
 }
