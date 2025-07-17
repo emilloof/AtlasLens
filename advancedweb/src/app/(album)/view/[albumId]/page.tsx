@@ -7,6 +7,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { CommentType } from "@/component/gallery";
 export default function Album({ params }: { params: Promise<{ albumId: string }> }) {
+  const [isCommentAdded, setIsCommentAdded] = useState(false);
   // Fetch the images from the server using the albumId
   const { albumId } = React.use(params);
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
       image_id: string;
       url: string;
       comments: CommentType[];
+      filter?: string;
     }[]
   >([]);
 
@@ -33,7 +35,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
   };
   useEffect(() => {
     fetchImages();
-  }, []);
+  }, [isCommentAdded]);
 
   return (
     <div className={styles.pageWrapper}>
@@ -55,9 +57,11 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
         </button>
       </div>
       <Gallery
+        setIsCommentAdded={setIsCommentAdded}
         imagePaths={images.map((img) => ({
           image_path: img.url,
           comments: img.comments,
+          image_id: img.image_id,
           filter: img.filter || "",
         }))}
       />

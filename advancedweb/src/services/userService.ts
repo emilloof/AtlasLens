@@ -1,4 +1,3 @@
-import { create } from "domain";
 import { apiRequest, ApiResponse } from "./api-clients";
 
 interface UserProfile {
@@ -28,12 +27,7 @@ interface Comment {
 
 export const userService = {
   getUserProfile: (userId: string): Promise<ApiResponse<UserProfile>> => apiRequest<UserProfile>(`user/${userId}`),
-
-  // updateUserProfile: (userId: string, profileData: Partial<UserProfile>): Promise<ApiResponse<UserProfile>> =>
-  //   apiRequest<UserProfile>(`user/${userId}`, {
-  //     method: "PUT",
-  //     body: profileData,
-  //   }),
+  getMyProfile: (): Promise<ApiResponse<UserProfile>> => apiRequest<UserProfile>(`me`),
   getUserAlbum: (): Promise<ApiResponse<Album>> => apiRequest<Album>(`album`),
 
   addUserToAlbum: (user_id: string, album_id: string): Promise<ApiResponse<Album>> =>
