@@ -3,25 +3,27 @@ import { prisma } from "@/libs/prisma";
 import { NextResponse } from "next/server";
 
 type userAlbumType = {
-  userId: string;
-  albumId: string;
+  user_id: string;
+  album_id: string;
   user?: User;
   album?: Album;
 };
 export async function POST(req: Request) {
-  const { userId } = await req.json();
+  const { user_id } = await req.json();
   try {
     const userAlbums = await prisma.userAlbum.findMany({
       where: {
-        userId: userId,
+        user_id,
       },
       include: {
         //take connected info as well
-        album: {include: {
+        album: {
+          include: {
             images: {
               take: 5, // Get only the first 5 images
             },
-          },},
+          },
+        },
       },
     });
 

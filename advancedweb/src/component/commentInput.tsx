@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./commentInput.module.css";
+import Button from "./button";
 export default function CommentInput({ onSubmit }: { onSubmit?: (comment: string) => void }) {
   const [comment, setComment] = useState("");
 
@@ -12,14 +13,15 @@ export default function CommentInput({ onSubmit }: { onSubmit?: (comment: string
   };
   return (
     <form className={styles.commentInputWrapper} onSubmit={handleSubmit}>
-      <input
-        type="text"
+      <textarea
         placeholder="Write a comment..."
         className={styles.commentInput}
         onChange={(e) => setComment(e.target.value)}
         value={comment}
+        id="commentInput"
+        rows={3}
       />
-      <button type="submit">Submit</button>
+      <Button name="send" size="s" type="submit" />
     </form>
   );
 }

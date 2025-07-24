@@ -1,9 +1,11 @@
 import { apiRequest, ApiResponse } from "./api-clients";
 
 interface UserProfile {
-  id: string;
-  user_name: string;
-  email: string;
+  user: {
+    user_id: string;
+    user_name: string;
+    email: string;
+  };
 }
 
 interface Album {

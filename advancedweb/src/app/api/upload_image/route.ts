@@ -42,7 +42,7 @@ export async function POST(req: Request) {
         prisma.image.create({
           data: {
             url,
-            albumId: album_id,
+            album_id,
           },
         })
       )
