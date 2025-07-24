@@ -6,7 +6,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 export async function GET(req: Request) {
   const cookieHeader = req.headers.get("cookie") || "";
-  const cookies = parse(cookieHeader); // ✅ parse cookie string to object
+  const cookies = parse(cookieHeader);
   const token = cookies.access_token;
   if (!token || !SECRET_KEY) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

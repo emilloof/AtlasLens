@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     });
 
     // JWT token
-    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "6h" });
 
     const response = NextResponse.json({ message: "Signup successful" }, { status: 200 });
 

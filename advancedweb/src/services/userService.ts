@@ -1,10 +1,11 @@
-import { create } from "domain";
 import { apiRequest, ApiResponse } from "./api-clients";
 
 interface UserProfile {
-  id: string;
-  user_name: string;
-  email: string;
+  user: {
+    user_id: string;
+    user_name: string;
+    email: string;
+  };
 }
 
 interface Album {
@@ -16,14 +17,19 @@ interface Album {
   images: string[];
 }
 
+interface Comment {
+  comment_id: string;
+  content: string;
+  writer_id: string;
+  created_at: string;
+  image_id: string;
+  parent_id?: string;
+  replies?: Comment[];
+}
+
 export const userService = {
   getUserProfile: (userId: string): Promise<ApiResponse<UserProfile>> => apiRequest<UserProfile>(`user/${userId}`),
-
-  // updateUserProfile: (userId: string, profileData: Partial<UserProfile>): Promise<ApiResponse<UserProfile>> =>
-  //   apiRequest<UserProfile>(`user/${userId}`, {
-  //     method: "PUT",
-  //     body: profileData,
-  //   }),
+  getMyProfile: (): Promise<ApiResponse<UserProfile>> => apiRequest<UserProfile>(`me`),
   getUserAlbum: (): Promise<ApiResponse<Album>> => apiRequest<Album>(`album`),
 
   addUserToAlbum: (user_id: string, album_id: string): Promise<ApiResponse<Album>> =>
@@ -60,4 +66,26 @@ export const userService = {
       method: "DELETE",
     }),
   getMyMap: (): Promise<ApiResponse<Album[]>> => apiRequest<Album[]>(`mymap`),
+
+  addComment: (
+    writer_id: string,
+    content: string,
+    image_id: string,
+    parent_id?: string
+  ): Promise<ApiResponse<Comment>> =>
+    apiRequest<Comment>(`add_comment`, {
+      method: "POST",
+      body: {
+        writer_id,
+        content,
+        image_id,
+        parent_id: parent_id ? parent_id : null,
+      },
+    }),
+  getComments: (image_id: string): Promise<ApiResponse<Comment[]>> => apiRequest<Comment[]>(`get_comments${image_id}`),
+
+  deleteComment: (comment_id: string): Promise<ApiResponse<void>> =>
+    apiRequest<void>(`delete_comment/${comment_id}`, {
+      method: "DELETE",
+    }),
 };
