@@ -1,4 +1,5 @@
 "use client";
+import React from "react";
 import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./gallery.module.css";
