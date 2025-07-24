@@ -155,21 +155,6 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
                           date={reply.created_at}
                           onReplyClick={() => setReplyTarget({ image_id: extendedItem.image_id, comment: reply })}
                         />
-
-                        {/* 대댓글에 대한 답글 입력창 (선택사항)
-                        {replyTarget?.comment.comment_id === reply.comment_id && (
-                          <CommentInput
-                            onSubmit={async (value) => {
-                              const writerInformation = await userService.getMyProfile();
-                              const writer_id = writerInformation?.data?.user?.user_id || "";
-                              const image_id = replyTarget.image_id;
-                              const parent_id = replyTarget.comment.comment_id;
-                              await userService.addComment(writer_id, value, image_id, parent_id);
-                              setIsCommentAdded((prev) => !prev);
-                              setReplyTarget(null);
-                            }}
-                          />
-                        )} */}
                       </div>
                     ))}
                 </React.Fragment>
