@@ -77,7 +77,7 @@ export default function Mypage() {
           style={{ display: "none" }}
           onChange={handleFileChange}
           ref={fileInputRef}
-        ></input>
+        />
         <Button name="change profile image" size="s" onClick={handleSelectButtonClick} />
         <section>
           <p>{userData?.user.username}</p>

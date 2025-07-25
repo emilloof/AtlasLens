@@ -20,9 +20,9 @@ export async function POST(req: Request) {
 
     const existing = await prisma.userAlbum.findUnique({
       where: {
-        userId_albumId: {
-          userId: user_id,
-          albumId: album_id,
+        user_id_album_id: {
+          user_id: user_id,
+          album_id: album_id,
         },
       },
     });
@@ -30,14 +30,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "User already added to album" }, { status: 400 });
     }
 
-    // const userAlbum = await prisma.userAlbum.create({
-    //   data: {
-    //     userId: user_id,
-    //     albumId: album_id,
-    //   },
-    // });
-
-    return NextResponse.json({ message: "User successfully adde to album" }, { status: 200 });
+    return NextResponse.json({ message: "User successfully add to album" }, { status: 200 });
   } catch (error) {
     console.error("fail to add user to album: ", error);
     throw error;

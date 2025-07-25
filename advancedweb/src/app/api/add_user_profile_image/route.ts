@@ -1,29 +1,32 @@
 import { prisma } from "@/libs/prisma";
 import { NextResponse } from "next/server";
+import path from "path";
+import fs from "fs";
 
 export async function POST(req: Request) {
   const formData = await req.formData();
-  const profile_image = formData.getAll("file") as File[];
+  const file = formData.get("file") as File;
   const user_id = formData.get("user_id") as string;
-  if (!user_id || !profile_image) {
+  if (!user_id || !file) {
     return NextResponse.json({ message: "No data received" }, { status: 400 });
   }
-const uploadDir = path.join(process.cwd(), "public/uploads");
+  const uploadDir = path.join(process.cwd(), "public/uploads");
 
-if(!fs.existsSync(uploadDir)){
-  fs.mkdirSync(uploadDir, {recursive: true});
-}
-
-
-const bypes = await profile_image.arrayButter();
-const buffer = Buffer.from(bytes);
-const uniqueName = `${Date.now()}-${file.name.replage(/\s+/g, "-")}`;
-const filePath = path.join(uploadDir, uniqueName);
-fs.writeFileSync(filePath, buffer);
-const imageUrl =  `/uploads/${uniqueName}`;
-
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+  }
 
   try {
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    const safeFileName = file.name.replace(/\s+/g, "-");
+    const uniqueName = `${Date.now()}-${safeFileName}`;
+    const filePath = path.join(uploadDir, uniqueName);
+
+    fs.writeFileSync(filePath, buffer);
+
+    const imageUrl = `/uploads/${uniqueName}`;
     const userExists = await prisma.user.findUnique({
       where: {
         user_id: user_id,
