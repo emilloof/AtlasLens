@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import profileImage from "../../../public/profile_default.png";
 export default function Mypage() {
   const router = useRouter();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
   const [userData, setUserData] = useState<UserProfileWhole | null>({
     user: {
       user_id: "",
@@ -27,7 +27,6 @@ export default function Mypage() {
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setSelectedFile(file);
 
       const formData = new FormData();
       formData.append("profile_image", file);
