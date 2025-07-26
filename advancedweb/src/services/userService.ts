@@ -83,13 +83,10 @@ export const userService = {
         album_id,
       },
     }),
-  postProfileImage: (user_id: string, profile_image: string): Promise<ApiResponse<UserProfileWhole>> =>
+  postProfileImage: (formData: object): Promise<ApiResponse<UserProfileWhole>> =>
     apiRequest<UserProfileWhole>(`add_user_profile_image`, {
       method: "POST",
-      body: {
-        user_id,
-        profile_image,
-      },
+      body: formData,
     }),
   browseUser: (): Promise<ApiResponse<Album>> => apiRequest<Album>(`browse_user`),
   makeAlbum: (

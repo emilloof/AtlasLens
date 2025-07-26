@@ -5,7 +5,8 @@ import fs from "fs";
 
 export async function POST(req: Request) {
   const formData = await req.formData();
-  const file = formData.get("file") as File;
+
+  const file = formData.get("profile_image") as File;
   const user_id = formData.get("user_id") as string;
   if (!user_id || !file) {
     return NextResponse.json({ message: "No data received" }, { status: 400 });
@@ -48,6 +49,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Userprofile successfully added", data: updatedUser }, { status: 200 });
   } catch (error) {
     console.error("fail to add profileImage: ", error);
-    throw error;
+    return NextResponse.json(
+      {
+        message: "Internal server error",
+      },
+      { status: 500 }
+    );
   }
 }

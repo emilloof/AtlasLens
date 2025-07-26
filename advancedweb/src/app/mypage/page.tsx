@@ -1,3 +1,4 @@
+"use client";
 import Button from "@/component/button";
 import styles from "./index.module.css";
 import Image from "next/image";
@@ -8,20 +9,6 @@ import profileImage from "../../../public/profile_default.png";
 export default function Mypage() {
   const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      setSelectedFile(file);
-    }
-  };
-
-  const handleSelectButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
   const [userData, setUserData] = useState<UserProfileWhole | null>({
     user: {
       user_id: "",
@@ -35,6 +22,36 @@ export default function Mypage() {
       password: "",
     },
   });
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+
+      const formData = new FormData();
+      formData.append("profile_image", file);
+      formData.append("user_id", userData?.user.user_id || "");
+
+      try {
+        await fetch("/api/add_user_profile_image", {
+          method: "POST",
+          body: formData,
+        });
+
+        await getProfile();
+      } catch (error) {
+        console.error("Fail to upload profile image", error);
+      }
+    }
+  };
+
+  const handleSelectButtonClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
   const getProfile = async () => {
     try {
       const userData = await userService.getMyProfile();
@@ -43,34 +60,17 @@ export default function Mypage() {
       console.error("Failed to fetch user data:", error);
     }
   };
-
-  const postProfileImage = async () => {
-    if (!selectedFile) {
-      alert("Choose an image");
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append("profile_image", selectedFile);
-      formData.append("user_id", userData?.user.user_id || "");
-
-      const postProfileResponse = await userService.postProfileImage(formData);
-    } catch (error) {
-      console.error("Fail to fetch profileImage", error);
-    }
-  };
-
   useEffect(() => {
     getProfile();
-  });
+  }, []);
 
   return (
-    <div>
-      <section>
+    <div className={styles.profilePage}>
+      <section className={styles.profileWrapper}>
         <div className={styles.profileImageWrapper}>
-          <Image src={userData?.user.profile_image || profileImage} alt="profileImage" />
+          <Image src={userData?.user.profile_image || profileImage} alt="profileImage" fill />
         </div>
+
         <input
           type="file"
           accept="image/*"
@@ -78,7 +78,9 @@ export default function Mypage() {
           onChange={handleFileChange}
           ref={fileInputRef}
         />
+
         <Button name="change profile image" size="s" onClick={handleSelectButtonClick} />
+
         <section>
           <p>{userData?.user.username}</p>
         </section>
