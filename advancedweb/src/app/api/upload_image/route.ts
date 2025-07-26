@@ -48,13 +48,6 @@ export async function POST(req: Request) {
       )
     );
   }
-  // if (!fs.existsSync(uploadDir)) {
-  //   fs.mkdirSync(uploadDir, { recursive: true });
-  // }
-
-  // Use a unique filename to avoid overwriting
-
-  // Optionally: Save imageUrl to your DB here
 
   return NextResponse.json({ message: "Image uploaded successfully", imageUrls }, { status: 200 });
 }
