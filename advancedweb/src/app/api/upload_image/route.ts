@@ -42,19 +42,12 @@ export async function POST(req: Request) {
         prisma.image.create({
           data: {
             url,
-            albumId: album_id,
+            album_id,
           },
         })
       )
     );
   }
-  // if (!fs.existsSync(uploadDir)) {
-  //   fs.mkdirSync(uploadDir, { recursive: true });
-  // }
-
-  // Use a unique filename to avoid overwriting
-
-  // Optionally: Save imageUrl to your DB here
 
   return NextResponse.json({ message: "Image uploaded successfully", imageUrls }, { status: 200 });
 }

@@ -15,7 +15,11 @@ model User {
   email     String  @unique
   password  String
   username  String
+  profile_image String?
   albums    UserAlbum[]
+  likes Like[]
+  comments Comment[] @relation("UserComments")
+  notifications Notification[] @relation("UserNotifications")
 }
 
 model Album {
@@ -28,17 +32,57 @@ model Album {
 }
 
 model UserAlbum {
-  user     User   @relation(fields: [userId], references: [user_id])
-  userId   String
-  album    Album  @relation(fields: [albumId], references: [album_id])
-  albumId  String
-  @@id([userId, albumId])
+  user     User   @relation(fields: [user_id], references: [user_id])
+  user_id   String
+  album    Album  @relation(fields: [album_id], references: [album_id])
+  album_id  String
+  @@id([user_id, album_id])
 }
 
 model Image {
   image_id String @id @default(uuid())
   url      String
-  album    Album  @relation(fields: [albumId], references: [album_id])
-  albumId  String
+  album    Album  @relation(fields: [album_id], references: [album_id])
+  album_id  String
   created_at DateTime @default(now())
+  comments   Comment[]
+  filter String?
+  likes Like[]
+  is_deleted Boolean @default(false)
 }
+
+model Comment {
+  comment_id   String   @id @default(uuid())
+  content      String
+  writer       User     @relation("UserComments", fields: [writer_id], references: [user_id])
+  writer_id     String
+  created_at   DateTime @default(now())
+  image        Image    @relation(fields: [image_id], references: [image_id])
+  image_id      String
+  parent       Comment? @relation("Reply", fields: [parent_id], references: [comment_id])
+  parent_id     String?  // 대댓글이면 부모 댓글의 id, 아니면 null
+  replies      Comment[] @relation("Reply")
+}
+
+model Like {
+  user   User   @relation(fields: [user_id], references: [user_id])
+  user_id String
+  image  Image  @relation(fields: [image_id], references: [image_id])
+  image_id String
+  created_at DateTime @default(now())
+  @@id([user_id, image_id]) 
+}
+
+
+model Notification {
+  notification_id String   @id @default(uuid())
+  user           User     @relation("UserNotifications", fields: [user_id], references: [user_id])
+  user_id         String
+  type           String   // 예: "comment", "like", "invite" 등
+  message        String   // 알림 내용
+  is_read        Boolean  @default(false)
+  created_at     DateTime @default(now())
+  image_id       String?
+  comment_id     String?
+}
+

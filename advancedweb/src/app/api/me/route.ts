@@ -6,7 +6,7 @@ const SECRET_KEY = process.env.SECRET_KEY;
 
 export async function GET(req: Request) {
   const cookieHeader = req.headers.get("cookie") || "";
-  const cookies = parse(cookieHeader); // ✅ parse cookie string to object
+  const cookies = parse(cookieHeader);
   const token = cookies.access_token;
   if (!token || !SECRET_KEY) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -17,7 +17,17 @@ export async function GET(req: Request) {
 
     const user = await prisma.user.findUnique({
       where: { email: payload.email },
-      select: { user_id: true, email: true, username: true },
+      select: {
+        user_id: true,
+        email: true,
+        password: true,
+        username: true,
+        profile_image: true,
+        albums: true,
+        likes: true,
+        comments: true,
+        notifications: true,
+      },
     });
 
     if (!user) {

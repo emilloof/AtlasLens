@@ -1,0 +1,21 @@
+.grayscale {
+  filter: grayscale(100%);
+}
+
+.sepia {
+  filter: sepia(100%);
+}
+
+.cooltone {
+  filter: hue-rotate(200deg) saturate(120%);
+}
+
+.warmtone {
+  filter: hue-rotate(-20deg) saturate(120%) brightness(1.05);
+}
+.grayscale,
+.sepia,
+.cooltone,
+.warmtone {
+  transition: filter 0.3s ease;
+}

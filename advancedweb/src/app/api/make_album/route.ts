@@ -16,11 +16,11 @@ export async function POST(req: NextRequest) {
 
     if (Array.isArray(users) && users.length > 0) {
       await Promise.all(
-        users.map((userId: string) =>
+        users.map((user_id: string) =>
           prisma.userAlbum.create({
             data: {
-              userId,
-              albumId: album_id,
+              user_id,
+              album_id,
             },
           })
         )
