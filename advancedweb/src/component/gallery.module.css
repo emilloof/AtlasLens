@@ -1,10 +1,10 @@
 /* globals.css */
 @import "../styles/color.css";
-@import '../styles/z-index.css';
+@import "../styles/z-index.css";
 .image-gallery {
- display: inline-flex;
+  display: inline-flex;
   flex-direction: column;
-  width: fit-content;  
+  width: fit-content;
 }
 
 .commentWrapper {
@@ -17,7 +17,7 @@
   width: 50%;
 
   height: 100%;
-  overflow-y : auto;
+  overflow-y: auto;
 }
 
 .image_gallery_center {
@@ -36,7 +36,7 @@
   border-radius: 10px;
   top: 8px;
   right: 8px;
-  z-index: var(--z-index-comment-btn)
+  z-index: var(--z-index-comment-btn);
 }
 :global(.image-gallery-slide-wrapper) {
   overflow: visible !important;
@@ -95,4 +95,8 @@
   justify-content: center !important;
   align-items: center !important;
   margin: 0 auto !important;
+}
+.likeWrapper {
+  position: absolute;
+  left: 8px;
 }

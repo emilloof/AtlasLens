@@ -60,7 +60,7 @@ model Comment {
   image        Image    @relation(fields: [image_id], references: [image_id])
   image_id      String
   parent       Comment? @relation("Reply", fields: [parent_id], references: [comment_id])
-  parent_id     String?  // 대댓글이면 부모 댓글의 id, 아니면 null
+  parent_id     String?  
   replies      Comment[] @relation("Reply")
 }
 

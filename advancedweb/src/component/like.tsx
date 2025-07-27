@@ -1,15 +1,15 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import like_empty from "../../public/like_empty.png";
 import like_full from "../../public/like_full.png";
 import Image from "next/image";
 import styles from "./like.module.css";
 
-export default function Like({ setIsLiked }: { setIsLiked: Dispatch<SetStateAction<boolean>> }) {
+export default function Like({ handleLikeClick , image_id}: { handleLikeClick: (image_id: string) => Promise<void> , image_id: string}) {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
     setIsClicked((prev) => !prev);
-    setIsLiked(true);
+    handleLikeClick(image_id);
   };
   return (
     <div className={styles.likeWrapper}>

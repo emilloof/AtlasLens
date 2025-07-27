@@ -136,4 +136,13 @@ export const userService = {
     apiRequest<void>(`delete_comment/${comment_id}`, {
       method: "DELETE",
     }),
+
+  likePhoto: (image_id: string, writer_id: string | undefined): Promise<ApiResponse<Image>> =>
+    apiRequest<Image>(`like_photo`, {
+      method: "POST",
+      body: {
+        writer_id,
+        image_id,
+      },
+    }),
 };

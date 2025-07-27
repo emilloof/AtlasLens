@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     await prisma.image.deleteMany({
       where: {
         image_id: { in: imageIds },
-        albumId: albumId, // only delete from the specified album
+        album_id: albumId, // only delete from the specified album
       },
     });
     return NextResponse.json({ message: "Images removed" }, { status: 200 });

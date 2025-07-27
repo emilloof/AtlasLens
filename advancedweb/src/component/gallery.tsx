@@ -12,6 +12,7 @@ import "../styles/filter.css";
 import CommentInput from "./commentInput";
 import { userService } from "@/services/userService";
 import default_profile from "../../public/profile_default.png";
+import Like from "./like";
 export interface WriterType {
   user_id: string;
   email: string;
@@ -72,6 +73,10 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
       filter?: string;
     };
     const isThisCommentOpen = commentOpenMap[extendedItem.image_id];
+    const handleLikeClick = async (image_id: string) => {
+      const myProfile = await userService.getMyProfile();
+      await userService.likePhoto(image_id, myProfile.data?.user.user_id);
+    };
     return (
       <div
         style={{
@@ -163,6 +168,9 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
         )}
         <div className={styles.commentIconWrapper}>
           <Image src={commentIcon} alt="comment" fill onClick={() => toggleComment(extendedItem.image_id)} />
+        </div>
+        <div className={styles.likeWrapper}>
+          <Like handleLikeClick={handleLikeClick} image_id={extendedItem.image_id} />
         </div>
       </div>
     );

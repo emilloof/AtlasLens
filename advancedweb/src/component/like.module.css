@@ -1,5 +1,5 @@
 .likeWrapper {
   height: 5vh;
   width: 5vh;
-  display: relative;
+  position: absolute;
 }
