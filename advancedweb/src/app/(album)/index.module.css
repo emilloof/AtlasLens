@@ -1,4 +1,3 @@
-
 .templateButtonWrapper {
   position: fixed;
   z-index: 9999;
@@ -7,7 +6,7 @@
   justify-content: end;
   right: 0px;
   bottom: 0px;
-  
+  gap: 8px;
 }
 
 .pageWrapper {

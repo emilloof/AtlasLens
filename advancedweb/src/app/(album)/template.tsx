@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import Button from "@/component/button";
 import { authService } from "@/services/authService";
 import styles from "./index.module.css";
@@ -8,14 +8,21 @@ export default function AlbumTemplate({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    const router = useRouter();
+  const router = useRouter();
   return (
-    <div className={styles.pageWrapper}>  
-    <div className={styles.templateButtonWrapper}>
-            <Button name = "Logout" size="m" handleButtonClick={() => {authService.signout(); router.push("/")}} />
-        </div>
-        {children} 
-       
+    <div className={styles.pageWrapper}>
+      <div className={styles.templateButtonWrapper}>
+        <Button
+          name="Logout"
+          size="m"
+          handleButtonClick={() => {
+            authService.signout();
+            router.push("/");
+          }}
+        />
+        <Button name="mypage" size="m" handleButtonClick={() => router.push("/mypage")} />
+      </div>
+      {children}
     </div>
   );
 }

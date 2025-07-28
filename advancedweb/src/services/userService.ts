@@ -19,7 +19,7 @@ interface Image {
   is_deleted: boolean;
 }
 
-interface Like {
+export interface Like {
   user: UserProfileWhole;
   user_id: string;
   image: Image;
@@ -135,5 +135,14 @@ export const userService = {
   deleteComment: (comment_id: string): Promise<ApiResponse<void>> =>
     apiRequest<void>(`delete_comment/${comment_id}`, {
       method: "DELETE",
+    }),
+
+  likePhoto: (image_id: string, writer_id: string | undefined): Promise<ApiResponse<Image>> =>
+    apiRequest<Image>(`like_photo`, {
+      method: "POST",
+      body: {
+        writer_id,
+        image_id,
+      },
     }),
 };

@@ -24,7 +24,7 @@ export async function GET(req: Request) {
         username: true,
         profile_image: true,
         albums: true,
-        likes: true,
+        likes: { include: { image: true } },
         comments: true,
         notifications: true,
       },
