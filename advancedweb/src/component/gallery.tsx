@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./gallery.module.css";
@@ -10,9 +10,9 @@ import Comment from "./comment";
 import styles from "./gallery.module.css";
 import "../styles/filter.css";
 import CommentInput from "./commentInput";
-import { userService } from "@/services/userService";
+import { Like, userService } from "@/services/userService";
 import default_profile from "../../public/profile_default.png";
-import Like from "./like";
+import LikeButton from "./LikeButton";
 export interface WriterType {
   user_id: string;
   email: string;
@@ -47,6 +47,17 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
     image_id: string;
     comment: CommentType;
   } | null>(null);
+  const [likedImages, setLikedImages] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const fetchLikes = async () => {
+      const profile = await userService.getMyProfile();
+      const likes: Like[] = profile.data?.user?.likes || [];
+      const likedIds = new Set(likes.map((like) => like.image_id));
+      setLikedImages(likedIds);
+    };
+    fetchLikes();
+  }, []);
 
   const toggleComment = (image_id: string) => {
     setCommentOpenMap((prev) => ({
@@ -170,7 +181,11 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
           <Image src={commentIcon} alt="comment" fill onClick={() => toggleComment(extendedItem.image_id)} />
         </div>
         <div className={styles.likeWrapper}>
-          <Like handleLikeClick={handleLikeClick} image_id={extendedItem.image_id} />
+          <LikeButton
+            handleLikeClick={handleLikeClick}
+            image_id={extendedItem.image_id}
+            isClickedBefore={likedImages.has(extendedItem.image_id)}
+          />
         </div>
       </div>
     );

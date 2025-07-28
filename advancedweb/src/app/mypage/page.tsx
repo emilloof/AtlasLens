@@ -83,11 +83,7 @@ export default function Mypage() {
         <section>
           <p>{userData?.user.username}</p>
         </section>
-        <Button
-          name="favorites"
-          size="m"
-          handleButtonClick={() => router.push(`${userData?.user.user_id}/favorites`)}
-        />
+        <Button name="favorites" size="m" handleButtonClick={() => router.push(`mypage/favorites`)} />
       </section>
     </div>
   );

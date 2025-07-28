@@ -19,7 +19,7 @@ interface Image {
   is_deleted: boolean;
 }
 
-interface Like {
+export interface Like {
   user: UserProfileWhole;
   user_id: string;
   image: Image;

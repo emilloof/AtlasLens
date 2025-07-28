@@ -20,6 +20,13 @@ export default function AlbumTemplate({
             router.push("/");
           }}
         />
+        <Button
+          name="Back"
+          size="m"
+          handleButtonClick={() => {
+            router.back();
+          }}
+        />
       </div>
       {children}
     </div>

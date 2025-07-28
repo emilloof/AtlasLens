@@ -4,8 +4,16 @@ import like_full from "../../public/like_full.png";
 import Image from "next/image";
 import styles from "./like.module.css";
 
-export default function Like({ handleLikeClick , image_id}: { handleLikeClick: (image_id: string) => Promise<void> , image_id: string}) {
-  const [isClicked, setIsClicked] = useState(false);
+export default function LikeButton({
+  handleLikeClick,
+  image_id,
+  isClickedBefore,
+}: {
+  handleLikeClick: (image_id: string) => Promise<void>;
+  image_id: string;
+  isClickedBefore: boolean;
+}) {
+  const [isClicked, setIsClicked] = useState(isClickedBefore);
 
   const handleClick = () => {
     setIsClicked((prev) => !prev);
