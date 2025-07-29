@@ -1,0 +1,11 @@
+@import "../styles/z-index.css";
+.selectorWrapper {
+  position: relative;
+  z-index: var(--z-index-filter-selector);
+  height: 5vh;
+  outline: none;
+  border-radius: 12px;
+  right: 7vh;
+  background-color: var(--color-03);
+  border: none;
+}

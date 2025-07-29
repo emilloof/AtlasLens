@@ -13,6 +13,8 @@ import CommentInput from "./commentInput";
 import { Like, userService } from "@/services/userService";
 import default_profile from "../../public/profile_default.png";
 import LikeButton from "./LikeButton";
+import FilterSelector from "./filterSelector";
+import "@/styles/filter.css";
 export interface WriterType {
   user_id: string;
   email: string;
@@ -101,6 +103,14 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
         className={styles.imageWrapper}
       >
         <div style={{ display: "relative" }} />
+        <FilterSelector
+          currentFilter={extendedItem.filter}
+          onChange={async (newFilter) => {
+            await userService.updateImageFilter(extendedItem.image_id, newFilter);
+            extendedItem.filter = newFilter;
+            setIsCommentAdded((prev) => !prev);
+          }}
+        />
         <Image
           src={extendedItem.original}
           className={extendedItem.filter ? extendedItem.filter : ""}
