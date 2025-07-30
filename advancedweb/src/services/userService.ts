@@ -145,4 +145,11 @@ export const userService = {
         image_id,
       },
     }),
+  updateImageFilter: (image_id: string, filter: string) =>
+    apiRequest<Image>(`image/${image_id}/filter`, {
+      method: "PATCH",
+      body: {
+        filter,
+      },
+    }),
 };
