@@ -76,6 +76,7 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
     comments: path.comments,
     thumbnail: path.image_path,
     image_id: path.image_id,
+    filter: path.filter,
     sizes: "height: 6.25rem",
   }));
 
@@ -85,6 +86,7 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
       image_id: string;
       filter?: string;
     };
+
     const isThisCommentOpen = commentOpenMap[extendedItem.image_id];
     const handleLikeClick = async (image_id: string) => {
       const myProfile = await userService.getMyProfile();
@@ -113,7 +115,7 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
         />
         <Image
           src={extendedItem.original}
-          className={extendedItem.filter ? extendedItem.filter : ""}
+          className={extendedItem.filter || ""}
           alt=""
           fill
           style={{

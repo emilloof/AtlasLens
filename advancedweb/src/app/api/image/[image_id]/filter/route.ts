@@ -1,8 +1,8 @@
 import { prisma } from "@/libs/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function PATCH(req: NextRequest, context: { params: { image_id: string } }) {
-  const { image_id } = context.params;
+export async function PATCH(req: NextRequest, { params }: { params: { image_id: string } }) {
+  const { image_id } = params;
   const body = await req.json();
   const { filter } = body;
 

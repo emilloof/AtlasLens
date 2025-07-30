@@ -22,15 +22,25 @@ export default function Favorites() {
   const images =
     favorites?.map((like) => ({
       original: like.image.url,
+      filter: like.image.filter,
     })) || [];
-
+  const renderFilteredItem = (item: any) => (
+    <div className="image-gallery-image">
+      <img
+        src={item.original}
+        className={item.filter || ""}
+        style={{ objectFit: "contain", width: "100%", height: "100%" }}
+        alt="favorite image"
+      />
+    </div>
+  );
   return (
     <div className={styles.pageWrapper}>
       <h1>my favorites</h1>
       <section className={styles.gridDiv}>
         {favorites?.map((image) => (
           <div className={styles.imageWrapper} key={image.image_id}>
-            <Image src={image.image.url} fill alt="favorite Image" />
+            <Image src={image.image.url} fill alt="favorite Image" className={image.image.filter || ""} />
           </div>
         ))}
       </section>
@@ -61,6 +71,7 @@ export default function Favorites() {
           <div className={styles.modalInner}>
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
               <ImageGallery
+                renderItem={renderFilteredItem}
                 items={images}
                 showFullscreenButton={false}
                 showPlayButton={false}
