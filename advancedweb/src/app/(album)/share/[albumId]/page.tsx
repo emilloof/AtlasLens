@@ -6,11 +6,14 @@ import Button from "@/component/button";
 import { useRouter } from "next/navigation";
 import PhotoPreview from "@/component/photoPreview";
 import useHandleShare from "@/hooks/useHandleShare";
-import React from "react";
+import React, { useState } from "react";
+import DeletedImageRecovery from "@/component/deletedImageRecovery";
 
 export default function Share({ params }: { params: Promise<{ albumId: string }> }) {
   // Fetch the images from the server using the albumId
   const { albumId } = React.use(params);
+  const [refreshDeletedImages, setRefreshDeletedImages] = useState(0);
+
   const {
     search,
     setSearch,
@@ -41,20 +44,24 @@ export default function Share({ params }: { params: Promise<{ albumId: string }>
         return;
       }
       alert("User added!");
-      fetchAlbum(); // Update shown shared users after adding a new user
+      fetchAlbum();
     } catch (err) {
-      alert("Error adding user");
+      alert(`Error adding user ${err}`);
     }
   };
 
   const handleRemovePhotos = async () => {
+    if (selectedPhotos.length === images.length) {
+      alert("At least one photo must remain in the album.");
+      return;
+    }
     try {
       const res = await fetch("/api/remove_image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          imageIds: selectedPhotos, //SEND ID NOT URL
-          albumId: albumId,
+          imageIds: selectedPhotos,
+          album_id: albumId,
         }),
       });
       if (!res.ok) {
@@ -63,10 +70,11 @@ export default function Share({ params }: { params: Promise<{ albumId: string }>
         return;
       }
       alert("Photos removed!");
-      setSelectedPhotos([]); // Clear selected photos after removal
-      fetchImages(); // Update the album view
+      setSelectedPhotos([]);
+      fetchImages();
+      setRefreshDeletedImages((prev) => prev + 1);
     } catch (err) {
-      alert("Error removing photos");
+      alert(`Error removing photos ${err}`);
     }
   };
 
@@ -82,20 +90,33 @@ export default function Share({ params }: { params: Promise<{ albumId: string }>
         />
       </div>
       <div className={styles.gallery}>
-        <h1>Album Preview</h1>
-        <div className={styles.grid}>
-          {images.map((img, idx) => (
-            <PhotoPreview
-              key={idx}
-              imageSrc={img.url}
-              imageID={img.image_id}
-              isSelected={selectedPhotos.includes(img.image_id)}
-              width={80}
-              height={80}
-              setSelectedPhotos={setSelectedPhotos}
-            />
-          ))}
-        </div>
+        <DeletedImageRecovery albumId={albumId} onRestoreSuccess={fetchImages} refreshTrigger={refreshDeletedImages} />
+        <section className={styles.album_preview_wrapper}>
+          <h1>Album Preview</h1>
+          <div className={styles.grid}>
+            {images.map((img, idx) => {
+              const isLastRemaining =
+                !selectedPhotos.includes(img.image_id) && selectedPhotos.length === images.length - 1;
+              return (
+                <PhotoPreview
+                  key={idx}
+                  imageSrc={img.url}
+                  imageID={img.image_id}
+                  isSelected={selectedPhotos.includes(img.image_id)}
+                  width={80}
+                  height={80}
+                  setSelectedPhotos={(selected) => {
+                    if (isLastRemaining && !selectedPhotos.includes(img.image_id)) {
+                      alert("You cannot deselect all images. At least one must remain.");
+                      return;
+                    }
+                    setSelectedPhotos(selected);
+                  }}
+                />
+              );
+            })}
+          </div>
+        </section>
       </div>
 
       {selectedPhotos.length > 0 && (

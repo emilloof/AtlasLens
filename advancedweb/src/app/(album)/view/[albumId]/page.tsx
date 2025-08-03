@@ -6,8 +6,11 @@ import styles from "./index.module.css";
 import React from "react";
 import { useEffect, useState } from "react";
 import { CommentType } from "@/component/gallery";
+import { authService } from "@/services/authService";
+
 export default function Album({ params }: { params: Promise<{ albumId: string }> }) {
   const [isCommentAdded, setIsCommentAdded] = useState(false);
+  const [isMine, setIsMine] = useState<undefined | boolean>(undefined);
   // Fetch the images from the server using the albumId
   const { albumId } = React.use(params);
   const router = useRouter();
@@ -20,7 +23,10 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
       filter?: string;
     }[]
   >([]);
-
+  const checkIfMyAlbum = async () => {
+    const isMine = await authService.checkIsMyAlbum(albumId);
+    setIsMine(isMine.data?.isOwner);
+  };
   const fetchImages = async () => {
     try {
       const res = await fetch(`/api/album?albumId=${albumId}`);
@@ -35,6 +41,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
   };
   useEffect(() => {
     fetchImages();
+    checkIfMyAlbum();
   }, [isCommentAdded]);
 
   return (
@@ -47,14 +54,16 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
             router.push("/map");
           }}
         />
-        <button
-          onClick={() => {
-            router.push("/share/" + albumId);
-          }}
-          className={styles.button}
-        >
-          <img src="/icons8-share-photo-53 (1).png" alt="Back" />
-        </button>
+        {isMine && (
+          <button
+            onClick={() => {
+              router.push("/share/" + albumId);
+            }}
+            className={styles.button}
+          >
+            <img src="/icons8-share-photo-53 (1).png" alt="Back" />
+          </button>
+        )}
       </div>
       <Gallery
         setIsCommentAdded={setIsCommentAdded}

@@ -15,6 +15,7 @@ import default_profile from "../../public/profile_default.png";
 import LikeButton from "./LikeButton";
 import FilterSelector from "./filterSelector";
 import "@/styles/filter.css";
+import "@/app/globals.css";
 export interface WriterType {
   user_id: string;
   email: string;
