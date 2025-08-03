@@ -1,5 +1,6 @@
 import { Album, User } from "@/generated/prisma";
 import { prisma } from "@/libs/prisma";
+import { parse } from "cookie";
 import { NextResponse } from "next/server";
 
 type userAlbumType = {
@@ -9,6 +10,13 @@ type userAlbumType = {
   album?: Album;
 };
 export async function POST(req: Request) {
+  const SECRET_KEY = process.env.SECRET_KEY;
+  const cookieHeader = req.headers.get("cookie") || "";
+  const cookies = parse(cookieHeader);
+  const token = cookies.access_token;
+  if (!token || !SECRET_KEY) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   const { user_id } = await req.json();
   try {
     const userAlbums = await prisma.userAlbum.findMany({
@@ -20,7 +28,10 @@ export async function POST(req: Request) {
         album: {
           include: {
             images: {
-              take: 5, // Get only the first 5 images
+              where: {
+                is_deleted: false,
+              },
+              take: 5,
             },
           },
         },

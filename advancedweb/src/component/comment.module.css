@@ -45,14 +45,14 @@
   height: auto;
   overflow: visible;
 
-  word-break: break-word
+  word-break: break-word;
 }
 .comment_wrapper p {
-  position: static;           
-  display: block;            
-  margin: 0;                  
-  white-space: pre-wrap;      
-  word-break: break-word;    
-  line-height: 1.5;         
+  position: static;
+  display: block;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
   text-align: left;
 }

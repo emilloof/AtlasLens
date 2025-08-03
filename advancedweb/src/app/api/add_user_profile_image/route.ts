@@ -2,8 +2,16 @@ import { prisma } from "@/libs/prisma";
 import { NextResponse } from "next/server";
 import path from "path";
 import fs from "fs";
+import { parse } from "cookie";
 
 export async function POST(req: Request) {
+  const SECRET_KEY = process.env.SECRET_KEY;
+  const cookieHeader = req.headers.get("cookie") || "";
+  const cookies = parse(cookieHeader);
+  const token = cookies.access_token;
+  if (!token || !SECRET_KEY) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   const formData = await req.formData();
 
   const file = formData.get("profile_image") as File;
