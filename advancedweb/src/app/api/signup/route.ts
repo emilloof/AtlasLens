@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 
-const SECRET_KEY = process.env.SECRET_KEY || "slifjlej35434#$%@";
+const SECRET_KEY = process.env.SECRET_KEY;
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,24 +16,24 @@ export async function POST(req: NextRequest) {
 
     // password hashing
     const hashedPassword = await bcrypt.hash(password, 10);
+    const userId = crypto.randomUUID();
 
     // store data in db
     await prisma.user.create({
       data: {
         username: userName,
         password: hashedPassword,
-        user_id: crypto.randomUUID(), //random string
+        user_id: userId,
         email: email,
       },
     });
 
     // JWT token
-    const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "6h" });
+    const token = jwt.sign({ user_id: userId, email: email }, SECRET_KEY || "", { expiresIn: "6h" });
 
     const response = NextResponse.json({ message: "Signup successful" }, { status: 200 });
 
     // put token to cookie
-
     response.cookies.set("access_token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
