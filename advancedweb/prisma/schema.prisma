@@ -20,6 +20,7 @@ model User {
   likes Like[]
   comments Comment[] @relation("UserComments")
   notifications Notification[] @relation("UserNotifications")
+  images Image[]
 }
 
 model Album {
@@ -49,6 +50,8 @@ model Image {
   filter String?
   likes Like[]
   is_deleted Boolean @default(false)
+  user       User     @relation(fields: [user_id], references: [user_id])
+  user_id    String
 }
 
 model Comment {

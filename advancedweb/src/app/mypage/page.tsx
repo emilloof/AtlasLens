@@ -20,6 +20,7 @@ export default function Mypage() {
       notifications: undefined,
       comments: undefined,
       password: "",
+      images: undefined,
     },
   });
   const fileInputRef = useRef<HTMLInputElement>(null);

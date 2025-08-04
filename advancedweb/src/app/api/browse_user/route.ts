@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/libs/prisma";
 
 export async function POST(req: Request) {
-  //const { searchParams } = new URL(req.url);
-  //const keyword = searchParams.get("keyword");
   const { keyword } = await req.json();
   if (!keyword) {
     return NextResponse.json({ message: "No keyword recieved" }, { status: 400 });
