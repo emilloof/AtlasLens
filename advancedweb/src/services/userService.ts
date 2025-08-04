@@ -154,5 +154,5 @@ export const userService = {
         filter,
       },
     }),
-  getDeletedImage: (album_id: string) => apiRequest<>(`get_deleted_images?albumId=${album_id}`, {}),
+  // getDeletedImage: (album_id: string) => apiRequest<>(`get_deleted_images?albumId=${album_id}`, {}),
 };
