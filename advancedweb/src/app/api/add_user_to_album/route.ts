@@ -1,7 +1,15 @@
 import { prisma } from "@/libs/prisma";
+import { parse } from "cookie";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
+  const SECRET_KEY = process.env.SECRET_KEY;
+  const cookieHeader = req.headers.get("cookie") || "";
+  const cookies = parse(cookieHeader);
+  const token = cookies.access_token;
+  if (!token || !SECRET_KEY) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   const body = await req.json();
   const { user_id, album_id } = body;
   if (!user_id || !album_id) {

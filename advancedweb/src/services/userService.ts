@@ -17,6 +17,7 @@ interface Image {
   filter?: string;
   likes: Like[];
   is_deleted: boolean;
+  user_id: string;
 }
 
 export interface Like {
@@ -37,6 +38,7 @@ export interface UserProfileWhole {
     likes: Like[] | undefined;
     comments: Comment[] | undefined;
     notifications: Notification[] | undefined;
+    images: Image[] | undefined;
   };
 }
 
@@ -152,4 +154,5 @@ export const userService = {
         filter,
       },
     }),
+  getDeletedImage: (album_id: string) => apiRequest<>(`get_deleted_images?albumId=${album_id}`, {}),
 };

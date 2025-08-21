@@ -25,7 +25,13 @@ export async function GET(req: Request) {
         profile_image: true,
         albums: true,
         likes: { include: { image: true } },
-        comments: true,
+        comments: {
+          where: {
+            image: {
+              is_deleted: false,
+            },
+          },
+        },
         notifications: true,
       },
     });

@@ -20,6 +20,9 @@ export async function GET(req: Request) {
           },
         },
         images: {
+          where: {
+            is_deleted: false,
+          },
           include: {
             comments: {
               include: {
@@ -42,7 +45,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json({ data: album }, { status: 200 });
   } catch (error) {
-    console.error("album fetch error:" , error);
+    console.error("album fetch error:", error);
     return NextResponse.json({ message: `Internal Server Error. ${error}` }, { status: 500 });
   }
 }

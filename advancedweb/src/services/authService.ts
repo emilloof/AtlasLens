@@ -34,4 +34,9 @@ export const authService = {
       method: "POST",
       body: {},
     }),
+  checkIsMyAlbum(album_id: string): Promise<ApiResponse<{ isOwner: boolean }>> {
+    return apiRequest<{ isOwner: boolean }>(`album/check_ownership?album_id=${encodeURIComponent(album_id)}`, {
+      method: "GET",
+    });
+  },
 };
