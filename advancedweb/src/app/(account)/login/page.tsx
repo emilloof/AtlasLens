@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 export default function Login() {
   const { email, setEmail, password, setPassword, loginSuccessMessage, handleSubmit, errorMessage } = useHandleLogin();
   const router = useRouter();
-
+  const handleGoogleLogin = () => {
+    window.location.href = "/api/auth/google/start";
+  };
   return (
     <div className={styles.pageWrapper}>
       <section className={styles.inputWrapper}>
@@ -31,7 +33,7 @@ export default function Login() {
         />
         <Button name="login" size="l" handleButtonClick={handleSubmit} />
         <p className={styles.successMessage}>{loginSuccessMessage}</p>
-
+        <Button name="Continue with Google" size="m" handleButtonClick={handleGoogleLogin} />
         <Button name="Go to signup" size="m" handleButtonClick={() => router.push("/signup")} />
       </section>
     </div>

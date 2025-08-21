@@ -66,7 +66,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
               <Image src="/icons8-share-photo-53 (1).png" alt="Back" fill />
             </button>
             <button
-              className={styles.button}
+              className={styles.rightbutton}
               onClick={() => {
                 router.push("/add_image/" + albumId);
               }}
