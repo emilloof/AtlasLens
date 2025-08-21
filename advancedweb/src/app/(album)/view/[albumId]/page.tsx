@@ -7,6 +7,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { CommentType } from "@/component/gallery";
 import { authService } from "@/services/authService";
+import Image from "next/image";
 
 export default function Album({ params }: { params: Promise<{ albumId: string }> }) {
   const [isCommentAdded, setIsCommentAdded] = useState(false);
@@ -55,14 +56,24 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
           }}
         />
         {isMine && (
-          <button
-            onClick={() => {
-              router.push("/share/" + albumId);
-            }}
-            className={styles.button}
-          >
-            <img src="/icons8-share-photo-53 (1).png" alt="Back" />
-          </button>
+          <div className={styles.rightBtnWrapper}>
+            <button
+              onClick={() => {
+                router.push("/share/" + albumId);
+              }}
+              className={styles.button}
+            >
+              <Image src="/icons8-share-photo-53 (1).png" alt="Back" fill />
+            </button>
+            <button
+              className={styles.rightbutton}
+              onClick={() => {
+                router.push("/add_image/" + albumId);
+              }}
+            >
+              <Image src="/add_image.png" alt="addImage" fill />
+            </button>
+          </div>
         )}
       </div>
       <Gallery

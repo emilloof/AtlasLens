@@ -13,7 +13,7 @@ export async function GET(req: Request) {
     const images = await prisma.image.findMany({
       where: {
         album_id: albumId,
-        is_deleted: true, // soft delete된 것만 가져오기
+        is_deleted: true,
       },
       select: {
         image_id: true,

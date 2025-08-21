@@ -15,7 +15,7 @@ export async function POST(req: Request) {
       where: { email: email },
     });
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    if (!user || !user.password || !(await bcrypt.compare(password, user.password))) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
     }
     if (SECRET_KEY) {

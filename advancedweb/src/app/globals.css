@@ -105,6 +105,7 @@ a {
 
 .image-gallery-slide-wrapper {
   overflow: visible !important;
+  width: 100vw !important;
 }
 
 .image-gallery-left-nav,
@@ -120,11 +121,13 @@ a {
 }
 
 .image-gallery-left-nav {
-  left: -60px;
+  left: -30px;
+  transform: translateY(-50%);
 }
 
 .image-gallery-right-nav {
-  right: -60px;
+  right: 0px;
+  transform: translateX(100%) translateY(-50%);
 }
 
 .image-gallery-play-button,
@@ -156,6 +159,8 @@ a {
   justify-content: center !important;
   align-items: center !important;
   margin: 0 auto !important;
+  overflow: hidden !important;
+  width: 100% !important;
 }
 
 :root {
@@ -168,4 +173,20 @@ a {
   --color-02: #1b1a55;
   --color-03: #535c91;
   --color-04: #9290c3;
+}
+.image-gallery-thumbnails-wrapper {
+  overflow-x: auto !important;
+  scrollbar-width: none; /* Firefox */
+}
+
+.image-gallery-thumbnails-wrapper::-webkit-scrollbar {
+  display: none; /* Chrome */
+}
+.image-gallery-slide-wrapper {
+  overflow: visible !important;
+  width: 100% !important;
+  position: relative; /* ✅ 버튼이 밀리지 않게 하려면 relative 필요 */
+  display: flex;
+  justify-content: center; /* ✅ 가운데 정렬 */
+  margin: 0 auto; /* 가운데 정렬 */
 }
