@@ -125,7 +125,7 @@ export async function GET(req: NextRequest) {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60,  1시간
+    maxAge: 60 * 60,  // 1시간
   });
 
   res.cookies.set("oauth_state", "", { path: "/", maxAge: 0 });
