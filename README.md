@@ -1,15 +1,4 @@
-# SCREENCASTS
-Below is the links for our screencasts:
 
-## Project Screencast
-https://youtu.be/-8EXbBCsMmc?si=O9WNKMT1ixgEX0Qk
-
-## Individual Screencasts
-### Emil Lööf (emilo851)
-https://www.youtube.com/watch?v=SlSGBTQVN3k&ab_channel=Emil
-
-### Ga Eun Kim (gaeki503)
-https://youtu.be/VnGVw4UAyqU?si=FpbJjDiHp-r3fQnv
 
 # Project Description
 
