@@ -9,7 +9,8 @@ import AlbumPreview from "./albumPreview";
 import { authService } from "@/services/authService";
 
 // Fix: Markers don't show up without this in Next.js
-delete (L.Icon.Default as any).prototype._getIconUrl;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png",
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
@@ -25,7 +26,14 @@ const redPin = L.icon({
   iconSize: [40, 40],
 });
 
-export default function LeafletMap({ albums }: { albums: any[] }) {
+interface AlbumData {
+  album_id: string;
+  latitude: number;
+  longitude: number;
+  images: Array<{ url: string }>;
+}
+
+export default function LeafletMap({ albums }: { albums: AlbumData[] }) {
   const [position, setPosition] = useState<[number, number] | null>([58.4059049, 15.5992799]);
   const [ownershipMap, setOwnershipMap] = useState<Record<string, boolean>>({});
 

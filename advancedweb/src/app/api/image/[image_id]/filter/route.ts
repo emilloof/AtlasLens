@@ -17,7 +17,7 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ im
   try {
     const decoded = jwt.verify(token, SECRET_KEY) as { user_id: string };
     user_id = decoded.user_id;
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Invalid token" }, { status: 403 });
   }
 

@@ -1,8 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
 
+interface Album {
+  album_id: string;
+  latitude: number;
+  longitude: number;
+  images: Array<{ url: string }>;
+  [key: string]: unknown;
+}
+
 export default function useHandleMap() {
-  const [albums, setAlbums] = useState<any[]>([]);
+  const [albums, setAlbums] = useState<Album[]>([]);
 
   useEffect(() => {
     const fetchAll = async () => {
