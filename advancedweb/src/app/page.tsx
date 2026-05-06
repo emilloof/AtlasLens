@@ -3,14 +3,6 @@ import styles from "./page.module.css";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 
-interface FloatingPin {
-  id: number;
-  city: string;
-  x: number;
-  y: number;
-  delay: number;
-}
-
 interface SlideShowItem {
   id: number;
   title: string;
@@ -19,8 +11,6 @@ interface SlideShowItem {
 }
 
 export default function Home() {
-  const [pins, setPins] = useState<FloatingPin[]>([]);
-  const [mounted, setMounted] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides: SlideShowItem[] = [
@@ -51,17 +41,6 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    setMounted(true);
-    // Initialize floating pins
-    setPins([
-      { id: 1, city: "Tokyo", x: 75, y: 35, delay: 0 },
-      { id: 2, city: "Paris", x: 42, y: 28, delay: 0.2 },
-      { id: 3, city: "Barcelona", x: 40, y: 32, delay: 0.4 },
-      { id: 4, city: "Singapore", x: 68, y: 55, delay: 0.6 },
-      { id: 5, city: "New York", x: 18, y: 25, delay: 0.8 },
-      { id: 6, city: "Sydney", x: 82, y: 72, delay: 1.0 },
-    ]);
-
     // Auto-advance slideshow every 5 seconds
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
