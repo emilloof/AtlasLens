@@ -1,5 +1,6 @@
 import DeletedImageRecovery from "@/component/deletedImageRecovery";
 
-export default function RecoverPage({ params }: { params: { albumId: string } }) {
-  return <DeletedImageRecovery albumId={params.albumId} />;
+export default async function RecoverPage({ params }: { params: Promise<{ albumId: string }> }) {
+  const { albumId } = await params;
+  return <DeletedImageRecovery albumId={albumId} />;
 }

@@ -35,6 +35,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Invalid token payload" }, { status: 401 });
     }
   } catch (err) {
+    console.error("JWT verification error:", err);
     return NextResponse.json({ error: "Invalid token" }, { status: 401 });
   }
 
