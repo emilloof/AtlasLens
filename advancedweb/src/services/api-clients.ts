@@ -8,7 +8,7 @@ export interface ApiResponse<T> {
 interface ApiRequestOptions {
   method?: HttpMethod;
   headers?: Record<string, string>;
-  body?: unknown;
+  body?: any;
 }
 
 export async function apiRequest<T>(endpoint: string, options: ApiRequestOptions = {}): Promise<ApiResponse<T>> {

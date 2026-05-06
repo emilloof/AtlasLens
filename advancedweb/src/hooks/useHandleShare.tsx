@@ -9,11 +9,6 @@ export default function useHandleShare(albumId: string) {
     const [suggestions, setSuggestions] = useState<{username: string, id: string, email: string}[]>([]);
     const [sharedUsers, setSharedUsers] = useState<{username: string, id: string, email: string}[]>([]);
     
-    interface User {
-      username: string;
-      id: string;
-      email: string;
-    }
     
     useEffect(() => {
         if (!search) {
@@ -33,12 +28,12 @@ export default function useHandleShare(albumId: string) {
                     return;
                 }
                 const data = await res.json();
-                setSuggestions(data.users.map((u: User) => ({
+                setSuggestions(data.users.map((u: any) => ({
                     username: u.username,
                     email: u.email,
-                    id: u.id
+                    id: u.user_id
                 })));
-            } catch {
+            } catch (err) {
                 setSuggestions([]);
             }
         };
@@ -56,13 +51,13 @@ export default function useHandleShare(albumId: string) {
             }
             const album = await res.json();
             setSharedUsers(
-                album.data.users.map((ua: {user: User}) => ({
+                album.data.users.map((ua: any) => ({
                     username: ua.user.username,
                     email: ua.user.email,
-                    id: ua.user.id,
+                    id: ua.user.user_id,
                 }))
             );
-        } catch {
+        } catch (error) {
             setSharedUsers([]);
         }
     }, [albumId]);
@@ -71,9 +66,9 @@ export default function useHandleShare(albumId: string) {
         fetchAlbum();
     }, [fetchAlbum]);
 
-    const [images, setImages] = useState<{ image_id: string, url: string }[]>([]);
+        const [images, setImages] = useState<{ image_id: string, url: string }[]>([]);
 
-    const fetchImages = useCallback(async () => {
+        const fetchImages = async () => {
         try {
             const res = await fetch(`/api/album?albumId=${albumId}`);
             if (!res.ok) {
@@ -82,14 +77,13 @@ export default function useHandleShare(albumId: string) {
             const album = await res.json();
             setImages(album.data.images);
             console.log("Fetched images:", album.data.images);
-        } catch {
-            // Error handled silently
+        } catch (error) {
+            console.error("Error fetching images:", error);
         }
-    }, [albumId]);
-    
+    };
     useEffect(() => {
         fetchImages();
-    }, [fetchImages]);
+    }, []);
 
     return {
         search,

@@ -3,11 +3,11 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -60,6 +60,7 @@ model UserAlbum {
 model Image {
   image_id String @id @default(uuid())
   url      String
+  alt      String?
   album    Album  @relation(fields: [album_id], references: [album_id])
   album_id  String
   created_at DateTime @default(now())

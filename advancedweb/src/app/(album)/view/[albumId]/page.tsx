@@ -43,7 +43,6 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
   useEffect(() => {
     fetchImages();
     checkIfMyAlbum();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCommentAdded]);
 
   return (

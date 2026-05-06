@@ -17,40 +17,39 @@ export async function PATCH(req: NextRequest, { params }: { params: Promise<{ im
   try {
     const decoded = jwt.verify(token, SECRET_KEY) as { user_id: string };
     user_id = decoded.user_id;
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: "Invalid token" }, { status: 403 });
   }
 
   const { image_id } = await params;
-  const body = await req.json();
-  const { filter } = body;
+  const { alt } = await req.json();
 
-  if (!filter || typeof filter !== "string") {
-    return NextResponse.json({ message: "Invalid filter" }, { status: 400 });
+  if (!alt || typeof alt !== "string") {
+    return NextResponse.json({ message: "Invalid alt text" }, { status: 400 });
   }
 
   try {
     const image = await prisma.image.findUnique({
       where: { image_id },
-      select: { user_id: true },
+      select: { user_id: true, alt: true },
     });
 
     if (!image) {
       return NextResponse.json({ message: "Image not found" }, { status: 404 });
     }
 
-    if (image.user_id !== user_id) {
-      return NextResponse.json({ error: "Forbidden: Not your image" }, { status: 403 });
+    // alt 가 이미 저장되어 있으면 덮어쓰지 않음
+    if (image.alt) {
+      return NextResponse.json({ message: "Alt already exists" }, { status: 200 });
     }
 
     const updated = await prisma.image.update({
       where: { image_id },
-      data: { filter },
+      data: { alt },
     });
 
     return NextResponse.json({ data: updated }, { status: 200 });
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ message: "Failed to update filter", error }, { status: 500 });
+    return NextResponse.json({ message: "Failed to update alt", error }, { status: 500 });
   }
 }

@@ -24,7 +24,16 @@ export default function Favorites() {
       original: like.image.url,
       filter: like.image.filter,
     })) || [];
-  
+  const renderFilteredItem = (item: any) => (
+    <div className="image-gallery-image">
+      <img
+        src={item.original}
+        className={item.filter || ""}
+        style={{ objectFit: "contain", width: "100%", height: "100%" }}
+        alt="favorite image"
+      />
+    </div>
+  );
   return (
     <div className={styles.pageWrapper}>
       <h1>my favorites</h1>
@@ -62,7 +71,8 @@ export default function Favorites() {
           <div className={styles.modalInner}>
             <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
               <ImageGallery
-                items={images.map((img) => ({ original: img.original, thumbnail: img.original }))}
+                renderItem={renderFilteredItem}
+                items={images}
                 showFullscreenButton={false}
                 showPlayButton={false}
                 showThumbnails={false}
