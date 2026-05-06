@@ -1,0 +1,58 @@
+@import "@/styles/z-index.css";
+@import "@/styles/color.css";
+
+.comment_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+}
+.comment_header_left {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 16px;
+}
+.comment_header_right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.comment_content {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: white;
+  font-size: 14px;
+  padding: 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.comment_wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--color-04);
+  z-index: var(--z-index-comment);
+  position: relative;
+
+  height: auto;
+  overflow: visible;
+
+  word-break: break-word;
+}
+.comment_wrapper p {
+  position: static;
+  display: block;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
+  text-align: left;
+}

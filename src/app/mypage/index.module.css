@@ -1,0 +1,43 @@
+.profileImageWrapper {
+  width: 12vh;
+  height: 12vh;
+  position: relative;
+}
+
+.profileImageWrapper img {
+  border-radius: 50%;
+}
+
+.profileWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 12px;
+}
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.templateButtonWrapper {
+  position: fixed;
+  z-index: 9999;
+  margin: 36px;
+  display: flex;
+  justify-content: end;
+  right: 0px;
+  bottom: 0px;
+  gap: 8px;
+}
+
+.pageWrapper {
+  position: static;
+  width: 100vw;
+  height: 100vh;
+}

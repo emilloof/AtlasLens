@@ -1,0 +1,16 @@
+.templateButtonWrapper {
+  position: fixed;
+  z-index: 9999;
+  margin: 36px;
+  display: flex;
+  justify-content: end;
+  right: 0px;
+  bottom: 0px;
+  gap: 8px;
+}
+
+.pageWrapper {
+  position: static;
+  width: 100vw;
+  height: 100vh;
+}

@@ -1,0 +1,46 @@
+@import "../styles/color.css";
+@import "../styles/z-index.css";
+@import "../styles/filter.css";
+
+.image-gallery {
+  display: inline-flex;
+  flex-direction: column;
+  width: fit-content;
+}
+
+.commentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  position: absolute;
+  right: 0;
+  width: 50%;
+
+  height: 100%;
+  overflow-y: auto;
+}
+
+.image_gallery_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.commentIconWrapper {
+  width: 7vh;
+  height: 7vh;
+  background-color: var(--color-04);
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  border-radius: 10px;
+  top: 8px;
+  right: 8px;
+  z-index: var(--z-index-comment-btn);
+}
+
+.likeWrapper {
+  position: absolute;
+  left: 8px;
+}
