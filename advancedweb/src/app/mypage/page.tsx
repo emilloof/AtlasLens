@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { UserProfileWhole, userService } from "@/services/userService";
 import { useEffect, useRef, useState } from "react";
 import profileImage from "../../../public/profile_default.png";
+import { uploadToCloudinary } from "@/libs/cloudinary";
 export default function Mypage() {
   const router = useRouter();
 
@@ -29,14 +30,13 @@ export default function Mypage() {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
 
-      const formData = new FormData();
-      formData.append("profile_image", file);
-      formData.append("user_id", userData?.user.user_id || "");
-
       try {
+        const url = await uploadToCloudinary(file);
+
         await fetch("/api/add_user_profile_image", {
           method: "POST",
-          body: formData,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ url, user_id: userData?.user.user_id || "" }),
         });
 
         await getProfile();
