@@ -7,55 +7,6 @@
   font-family: "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
 }
 
-/* ===== ATMOSPHERE & BACKGROUND ===== */
-.atmosphere {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.glow1 {
-  position: absolute;
-  top: -10%;
-  left: -5%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255, 168, 104, 0.08), transparent 70%);
-  filter: blur(80px);
-  animation: float 20s ease-in-out infinite;
-}
-
-.glow2 {
-  position: absolute;
-  top: 20%;
-  right: -5%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(180, 220, 255, 0.06), transparent 70%);
-  filter: blur(80px);
-  animation: float 25s ease-in-out infinite reverse;
-}
-
-.glow3 {
-  position: absolute;
-  bottom: 10%;
-  left: 30%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(200, 180, 150, 0.04), transparent 70%);
-  filter: blur(80px);
-  animation: float 30s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) translateX(0px);
-  }
-  50% {
-    transform: translateY(-30px) translateX(15px);
-  }
-}
 
 /* ===== MAP HERO SECTION ===== */
 .mapHero {

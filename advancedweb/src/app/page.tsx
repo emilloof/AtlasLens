@@ -90,7 +90,7 @@ export default function Home() {
               </p>
 
               <div className={styles.heroActions}>
-                <Link href="/map" className={styles.ctaPrimary}>
+                <Link href="/signup" className={styles.ctaPrimary}>
                   <span>Start your journey</span>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="M7 7h10v10M17 7L7 17" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
