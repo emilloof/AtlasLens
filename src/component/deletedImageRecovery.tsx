@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./deletedImageRecovery.module.css";
 import Button from "./button";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 
 interface ImageType {
   image_id: string;
@@ -76,7 +76,7 @@ export default function DeletedImageRecovery({
             className={`${styles.imageWrapper} ${selected.has(img.image_id) ? styles.selected : ""}`}
             onClick={() => toggleSelect(img.image_id)}
           >
-            <Image src={img.url} alt="deleted" width={100} height={100} />
+            <OptimizedImage src={img.url} image_id={img.image_id} width={100} height={100} />
             <input
               type="checkbox"
               checked={selected.has(img.image_id)}

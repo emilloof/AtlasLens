@@ -4,6 +4,7 @@ import ImageGallery, { ReactImageGalleryItem } from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./gallery.module.css";
 import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import commentIcon from "../../public/comment.png";
 import { useState } from "react";
 import Comment from "./comment";
@@ -114,14 +115,12 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
             setIsCommentAdded((prev) => !prev);
           }}
         />
-        <Image
+        <OptimizedImage
           src={extendedItem.original}
+          image_id={extendedItem.image_id}
           className={extendedItem.filter || ""}
-          alt=""
           fill
-          style={{
-            objectFit: "contain",
-          }}
+          style={{ objectFit: "contain" }}
         />
         {isThisCommentOpen && !extendedItem.comments?.length && (
           <div className={styles.commentWrapper}>

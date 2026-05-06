@@ -9,12 +9,12 @@ import { useRouter } from "next/navigation";
 
 export default function Create() {
   const { city, setCity, handleSearch, responseText, loading } = useHandleSearchCity();
-  const [uploadStatus, setUploadStatus] = useState<string>("");
-  const [isPhotoUploaded, setIsPhotoUploaded] = useState<boolean>(false);
-  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [statusMessage, setStatusMessage] = useState<string>("");
+  const [uploadedUrls, setUploadedUrls] = useState<string[]>([]);
   const [albumId, setAlbumId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
   const route = useRouter();
+
   useEffect(() => {
     fetch("/api/me")
       .then((res) => res.json())
@@ -22,57 +22,13 @@ export default function Create() {
         if (data.user?.user_id) setUserId(data.user.user_id);
       });
   }, []);
-  const handlePhotoUpload = async (files: File[]) => {
-    if (!files || files.length === 0) {
-      setUploadStatus("No files selected");
-      return;
-    }
-    if (!albumId) {
-      setUploadStatus("Please create an album before uploading photos");
-      return;
-    }
-    if (city === undefined) {
-      setUploadStatus("Please enter a city before uploading photos");
-      return;
-    }
-
-    if (isPhotoUploaded) {
-      route.push(`/view/${albumId}`);
-      return;
-    }
-    setUploadStatus("Uploading...");
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("file", file);
-    });
-    if (albumId) {
-      formData.append("album_id", albumId);
-    }
-    try {
-      const res = await fetch("/api/upload_image", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setUploadStatus("Upload successful");
-        setIsPhotoUploaded(true);
-      } else {
-        setUploadStatus(`Upload failed: ${data.error || "Unknown error"}`);
-      }
-    } catch (error) {
-      setUploadStatus(`Upload failed: ${error instanceof Error ? error.message : "Unknown error"}`);
-    }
-  };
 
   const handleAlbumUpload = async () => {
-    setUploadStatus("Creating album...");
+    setStatusMessage("Creating album...");
     try {
       const res = await fetch("/api/make_album", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           city_name: city?.name,
           latitude: city?.latitude,
@@ -83,13 +39,13 @@ export default function Create() {
       const data = await res.json();
 
       if (res.ok) {
-        setUploadStatus("Album created successfully!");
+        setStatusMessage("Album created! Now upload your photos.");
         setAlbumId(data.body.album_id);
       } else {
-        setUploadStatus(`Failed to create album: ${data.error || "Unknown error"}`);
+        setStatusMessage(`Failed to create album: ${data.error || "Unknown error"}`);
       }
     } catch (error) {
-      setUploadStatus(`Failed to create album: ${error instanceof Error ? error.message : "Unknown error"}`);
+      setStatusMessage(`Failed to create album: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
@@ -112,6 +68,7 @@ export default function Create() {
           </form>
           <Button name={loading ? "Loading... " : "Search"} size="s" handleButtonClick={handleSearch} />
         </section>
+
         <Button name={"Create Album"} size="l" handleButtonClick={handleAlbumUpload} />
 
         {responseText && (
@@ -120,13 +77,17 @@ export default function Create() {
           </section>
         )}
 
-        <UploadPhotos setSelectedFiles={setSelectedFiles} />
-        {uploadStatus && <div>{uploadStatus}</div>}
-        <Button
-          name={isPhotoUploaded ? "Go to Album" : "Upload Photos"}
-          size="l"
-          handleButtonClick={() => handlePhotoUpload(selectedFiles)}
-        />
+        <UploadPhotos album_id={albumId} setUploadedUrls={setUploadedUrls} />
+
+        {statusMessage && <div>{statusMessage}</div>}
+
+        {uploadedUrls.length > 0 && albumId && (
+          <Button
+            name="Go to Album"
+            size="l"
+            handleButtonClick={() => route.push(`/view/${albumId}`)}
+          />
+        )}
       </section>
     </div>
   );

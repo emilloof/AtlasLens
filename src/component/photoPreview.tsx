@@ -1,5 +1,5 @@
 'use client'
-import Image from 'next/image'
+import OptimizedImage from './OptimizedImage'
 import { Dispatch, SetStateAction } from 'react'
 
 export default function PhotoPreview({ imageSrc, imageID, isSelected, width, height , setSelectedPhotos}: { imageSrc: string , imageID: string, isSelected: boolean, width:number, height: number, setSelectedPhotos : Dispatch<SetStateAction<string[]>>} ) {
@@ -15,7 +15,7 @@ export default function PhotoPreview({ imageSrc, imageID, isSelected, width, hei
 
     return(
     <div style={{width: width , height: height, position: "relative"}}>
-        <Image src={imageSrc} fill alt={"failed to load"} objectFit='cover'/>
+        <OptimizedImage src={imageSrc} image_id={imageID} fill style={{ objectFit: 'cover' }} />
         <input type="checkbox" checked={isSelected} onChange={handleChange} style={{ position: "relative"}}/>
     </div>)
 }
