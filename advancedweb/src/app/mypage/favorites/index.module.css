@@ -1,5 +1,4 @@
-@import "@/styles/color.css";
-@import "@/styles/filter.css";
+
 .gridDiv {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
