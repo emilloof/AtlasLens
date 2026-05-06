@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
   }
 
   const tokenJson = await tokenRes.json();
-  const { access_token, refresh_token, expires_in, id_token } = tokenJson as {
+  const { access_token, refresh_token, expires_in } = tokenJson as {
     access_token: string;
     refresh_token?: string;
     expires_in?: number;
