@@ -7,7 +7,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { CommentType } from "@/component/gallery";
 import { authService } from "@/services/authService";
-import Image from "next/image";
 
 export default function Album({ params }: { params: Promise<{ albumId: string }> }) {
   const [isCommentAdded, setIsCommentAdded] = useState(false);

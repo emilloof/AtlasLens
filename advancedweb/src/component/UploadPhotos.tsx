@@ -6,11 +6,11 @@ import AlbumPreview from "./albumPreview";
 
 interface UploadPhotosProps {
   setSelectedFiles: Dispatch<SetStateAction<File[]>>;
-  isPhotoUploaded: boolean;
-  albumID: string | null;
+  isPhotoUploaded?: boolean;
+  albumID?: string | null;
 }
 
-const UploadPhotos: React.FC<UploadPhotosProps> = ({ setSelectedFiles, isPhotoUploaded = false, albumID }) => {
+const UploadPhotos: React.FC<UploadPhotosProps> = ({ setSelectedFiles, isPhotoUploaded = false, albumID = null }) => {
   const [previews, setPreviews] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

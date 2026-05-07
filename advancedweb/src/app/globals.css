@@ -106,7 +106,7 @@ a {
 :root {
   --z-index-gallery: 900;
   --z-index-comment: 1000;
-  --z-index-comment-btn: 9000;
+  --z-index-comment-btn: 10;
   --z-index-filter-selector: 1000;
   --color-orange: #ffa868;
   --color-orange2: #ff9453;
