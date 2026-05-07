@@ -35,7 +35,7 @@
   position: absolute;
   right: 0;
   border-radius: 10px;
-  top: 8px;
+  top: -8px;
   right: 8px;
   z-index: var(--z-index-comment-btn);
 }
@@ -44,3 +44,9 @@
   position: absolute;
   left: 8px;
 }
+.imageWrapper{
+  height: 40vw;
+  width: 60vw;
+  display: "flex",
+      
+        }

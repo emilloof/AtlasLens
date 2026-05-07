@@ -15,7 +15,7 @@ export default function MapPage() {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.buttonWrapper}>
-        <Button name="create new album" size="m" handleButtonClick={() => router.push("/create")} />
+        <Button name="Create New Album" size="m" handleButtonClick={() => router.push("/create")} />
       </div>
       <MapComponent albums={albums} />
     </div>

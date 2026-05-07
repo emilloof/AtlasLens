@@ -5,14 +5,6 @@
   align-items: center;
 }
 
-.galleryButtons {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100vw;
-
-  position: relative;
-}
 
 .button {
   all: unset;
@@ -32,17 +24,20 @@
   align-items: center;
   overflow: visible;
 }
-.rightBtnWrapper {
-  display: flex;
-  position: fixed;
-  left: 60px;
-}
-.rightbutton {
-  all: unset;
-  cursor: pointer;
+
+
+
+.backButton {
   position: absolute;
-  width: 36px;
-  height: 36px;
-  margin: 6px;
-  left: 40px;
+  top: 20px;
+  left: 20px;
+}
+
+.galleryButtons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

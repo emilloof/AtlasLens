@@ -39,7 +39,7 @@ export default function Login() {
           name="Continue with Google"
           size="s"
           handleButtonClick={handleGoogleLogin}
-          iconSrc="/green_pin.png"
+          iconSrc="/google.png"
           iconAlt="Google logo"
         />
           <Button name="Go to signup" size="s" handleButtonClick={() => router.push("/signup")} />

@@ -94,26 +94,16 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded }) => {
       await userService.likePhoto(image_id, myProfile.data?.user.user_id);
     };
     return (
-      <div
-        style={{
-          height: "60vh",
-          width: "40vw",
-          display: "flex",
-          justifyContent: "right",
-          padding: "10px",
-          gap: "20px",
-        }}
-        className={styles.imageWrapper}
-      >
+      <div className={styles.imageWrapper}>
         <div style={{ display: "relative" }} />
-        <FilterSelector
+          <FilterSelector
           currentFilter={extendedItem.filter}
           onChange={async (newFilter) => {
             await userService.updateImageFilter(extendedItem.image_id, newFilter);
             extendedItem.filter = newFilter;
             setIsCommentAdded((prev) => !prev);
-          }}
-        />
+              }}
+            />
         <Image
           src={extendedItem.original}
           className={extendedItem.filter || ""}

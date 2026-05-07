@@ -13,7 +13,7 @@ export default function useHandleSearchCity() {
   } | null>(null);
   const [responseText, setResponseText] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
+  const [isCitySearched, setIsCitySearched] = useState(false);
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     const apiUrl = `https://api.api-ninjas.com/v1/city?name=${city?.name.trim()}`;
@@ -30,14 +30,17 @@ export default function useHandleSearchCity() {
       if (response.ok) {
         const data = await response.json();
         setCity(data[0]);
+        setIsCitySearched(true);
         setResponseText(`City found: ${data[0].name}, Country: ${data[0].country}`);
       } else {
         setResponseText("City not found.");
+        setIsCitySearched(false);
       }
     } catch (error) {
       setResponseText(`City not found. ${error}`);
+      setIsCitySearched(false);
     }
   };
 
-  return { city, setCity, handleSearch, responseText, loading };
+  return { city, setCity, handleSearch, responseText, loading, isCitySearched };
 }

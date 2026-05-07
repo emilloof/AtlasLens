@@ -47,34 +47,36 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
   }, [isCommentAdded]);
 
   return (
-    <div className={styles.pageWrapper}>
-      <div className={styles.galleryButtons}>
+    <div className="page">
+      <div className={styles.backButton}>
         <Button
-          name="Back"
-          size="m"
+          name="<"
+          size="s"
           handleButtonClick={() => {
             router.push("/map");
-          }}
-        />
+          }}/>
+      </div>
+
+      <div className={styles.galleryButtons}>
         {isMine && (
-          <div className={styles.rightBtnWrapper}>
-            <button
-              onClick={() => {
-                router.push("/share/" + albumId);
-              }}
-              className={styles.button}
-            >
-              <Image src="/icons8-share-photo-53 (1).png" alt="Back" fill />
-            </button>
-            <button
-              className={styles.rightbutton}
-              onClick={() => {
-                router.push("/add_image/" + albumId);
-              }}
-            >
-              <Image src="/add_image.png" alt="addImage" fill />
-            </button>
-          </div>
+          <>
+            <Button
+              name="Share Photos"
+              size="s"
+              handleButtonClick={() => router.push("/share/" + albumId)}
+              iconAlt="share"
+              iconSize={36}
+              iconSrc="/icons8-share-photo-53 (1).png"
+            />
+            <Button
+              name="Add Image"
+              size="s"
+              handleButtonClick={() => router.push("/add_image/" + albumId)}
+              iconSrc="/add_image.png"
+              iconAlt="addImage"
+              iconSize={36}
+            />
+          </>
         )}
       </div>
       <Gallery

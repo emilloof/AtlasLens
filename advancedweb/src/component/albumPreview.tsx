@@ -8,7 +8,7 @@ interface AlbumPreviewProps {
   width?: number;
   height?: number;
   interact?: boolean;
-  albumID?: string;
+  albumID: string | null;
 }
 
 const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height = 100, interact = false, albumID }) => {
@@ -16,7 +16,7 @@ const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height
   const router = useRouter();
 
   return (
-    <div className={`${styles.stack} ${interact ? styles.interact : ''}`} style={{ width, height }} onClick={() => {/*Handle album click*/ router.push("/view/" + albumID)}}>
+    <div className={`${styles.stack} ${interact ? styles.interact : ''}`} style={{ width, height }} onClick={() => {router.push("/view/" + albumID)}}>
       {images.map((src, index) => (
         <Image
           key={index}

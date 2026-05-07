@@ -106,12 +106,12 @@ a {
 :root {
   --z-index-gallery: 900;
   --z-index-comment: 1000;
-  --z-index-comment-btn: 1100;
+  --z-index-comment-btn: 9000;
   --z-index-filter-selector: 1000;
   --color-orange: #ffa868;
   --color-orange2: #ff9453;
   --color-orange-hover: rgba(255, 168, 104, 0.4);
-    --color-orange-shadow: rgba(255, 168, 104, 0.2);
+  --color-orange-shadow: rgba(255, 168, 104, 0.2);
 
   --color-background: #0f1419;
 

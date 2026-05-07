@@ -6,11 +6,14 @@ import AlbumPreview from "./albumPreview";
 
 interface UploadPhotosProps {
   setSelectedFiles: Dispatch<SetStateAction<File[]>>;
+  isPhotoUploaded: boolean;
+  albumID: string | null;
 }
 
-const UploadPhotos: React.FC<UploadPhotosProps> = ({ setSelectedFiles }) => {
+const UploadPhotos: React.FC<UploadPhotosProps> = ({ setSelectedFiles, isPhotoUploaded = false, albumID }) => {
   const [previews, setPreviews] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -42,9 +45,10 @@ const UploadPhotos: React.FC<UploadPhotosProps> = ({ setSelectedFiles }) => {
       </label>
 
       <div style={{ marginBottom: "30px" }}>
-        <AlbumPreview images={previews} width={120} height={80} />
+        <AlbumPreview images={previews} width={120} height={80} albumID={albumID} />
       </div>
-      <Button name="Select Photos" size="m" handleButtonClick={handleSelectButtonClick} />
+      {!isPhotoUploaded &&
+        <Button name="Select Photos" size="s" handleButtonClick={handleSelectButtonClick} />}
     </div>
   );
 };
