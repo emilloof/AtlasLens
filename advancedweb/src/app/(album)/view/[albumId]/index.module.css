@@ -41,3 +41,59 @@
   align-items: center;
   gap: 8px;
 }
+
+.interactionPanel {
+  width: min(72vw, 960px);
+  margin: 20px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.likeSlot {
+  position: relative;
+  width: 5vh;
+  height: 5vh;
+}
+
+.commentToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+}
+
+.commentPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.92);
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.commentList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.replyInput {
+  margin-left: 2rem;
+}
+
+.replyComment {
+  margin-left: 2rem;
+}

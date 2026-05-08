@@ -27,6 +27,11 @@ export default function Create() {
   }, []);
 
   const handlePhotoUpload = async (files: File[]) => {
+    if (isPhotoUploaded && albumId) {
+      route.push(`/view/${albumId}`);
+      return;
+    }
+
     if (!files || files.length === 0) {
       setUploadStatus("No files selected");
       return;
@@ -35,7 +40,7 @@ export default function Create() {
       setUploadStatus("Please create an album before uploading photos");
       return;
     }
-    if (city === undefined) {
+    if (!city) {
       setUploadStatus("Please enter a city before uploading photos");
       return;
     }
@@ -137,6 +142,7 @@ export default function Create() {
         {isAlbumCreated && (
           <>
             <UploadPhotos setSelectedFiles={setSelectedFiles} isPhotoUploaded={isPhotoUploaded} albumID={albumId} />
+            {uploadStatus && <div>{uploadStatus}</div>}
       
             {isPhotoUploaded && (<div className={styles.buttonWrapper}>
                 <Button

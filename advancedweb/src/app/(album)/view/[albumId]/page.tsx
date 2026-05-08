@@ -1,32 +1,42 @@
 "use client";
 import Button from "@/component/button";
-import Gallery from "@/component/gallery";
-import { useRouter } from "next/navigation";
-import styles from "./index.module.css";
-import React from "react";
-import { useEffect, useState } from "react";
-import { CommentType } from "@/component/gallery";
+import Comment from "@/component/comment";
+import CommentInput from "@/component/commentInput";
+import Gallery, { CommentType } from "@/component/gallery";
+import LikeButton from "@/component/LikeButton";
 import { authService } from "@/services/authService";
+import { Like, userService } from "@/services/userService";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import styles from "./index.module.css";
+
+type AlbumImage = {
+  image_id: string;
+  url: string;
+  comments: CommentType[];
+  filter?: string;
+};
 
 export default function Album({ params }: { params: Promise<{ albumId: string }> }) {
   const [isCommentAdded, setIsCommentAdded] = useState(false);
   const [isMine, setIsMine] = useState<undefined | boolean>(undefined);
-  // Fetch the images from the server using the albumId
+  const [images, setImages] = useState<AlbumImage[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
+  const [replyTarget, setReplyTarget] = useState<{ image_id: string; comment: CommentType } | null>(null);
+  const [likedImages, setLikedImages] = useState<Set<string>>(new Set());
+
   const { albumId } = React.use(params);
   const router = useRouter();
 
-  const [images, setImages] = useState<
-    {
-      image_id: string;
-      url: string;
-      comments: CommentType[];
-      filter?: string;
-    }[]
-  >([]);
+  const selectedImage = images[currentIndex];
+
   const checkIfMyAlbum = async () => {
-    const isMine = await authService.checkIsMyAlbum(albumId);
-    setIsMine(isMine.data?.isOwner);
+    const res = await authService.checkIsMyAlbum(albumId);
+    setIsMine(res.data?.isOwner);
   };
+
   const fetchImages = async () => {
     try {
       const res = await fetch(`/api/album?albumId=${albumId}`);
@@ -39,11 +49,43 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
       console.error("Error fetching images:", error);
     }
   };
+
+  const handleLikeClick = async (image_id: string) => {
+    const myProfile = await userService.getMyProfile();
+    await userService.likePhoto(image_id, myProfile.data?.user.user_id);
+    setLikedImages((prev) => {
+      const next = new Set(prev);
+      if (next.has(image_id)) {
+        next.delete(image_id);
+      } else {
+        next.add(image_id);
+      }
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    const fetchLikes = async () => {
+      const profile = await userService.getMyProfile();
+      const likes: Like[] = profile.data?.user?.likes || [];
+      const likedIds = new Set(likes.map((like) => like.image_id));
+      setLikedImages(likedIds);
+    };
+
+    fetchLikes();
+  }, []);
+
   useEffect(() => {
     fetchImages();
     checkIfMyAlbum();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCommentAdded]);
+  }, [albumId, isCommentAdded]);
+
+  useEffect(() => {
+    setReplyTarget(null);
+  }, [selectedImage?.image_id]);
+
+  const topLevelComments = selectedImage?.comments.filter((comment) => !comment.parent_id) || [];
 
   return (
     <div className="page">
@@ -53,7 +95,8 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
           size="s"
           handleButtonClick={() => {
             router.push("/map");
-          }}/>
+          }}
+        />
       </div>
 
       <div className={styles.galleryButtons}>
@@ -78,8 +121,10 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
           </>
         )}
       </div>
+
       <Gallery
         setIsCommentAdded={setIsCommentAdded}
+        onSlideChange={setCurrentIndex}
         imagePaths={images.map((img) => ({
           image_path: img.url,
           comments: img.comments,
@@ -87,6 +132,82 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
           filter: img.filter || "",
         }))}
       />
+
+      {selectedImage && (
+        <div className={styles.interactionPanel}>
+          <div className={styles.actionRow}>
+            <div className={styles.likeSlot}>
+              <LikeButton
+                handleLikeClick={handleLikeClick}
+                image_id={selectedImage.image_id}
+                isClickedBefore={likedImages.has(selectedImage.image_id)}
+              />
+            </div>
+            <button
+              type="button"
+              className={styles.commentToggle}
+              onClick={() => setIsCommentOpen((prev) => !prev)}
+            >
+              <Image src="/comment.png" alt="comment" width={28} height={28} />
+              <span>Comments</span>
+              <span>({selectedImage.comments.length})</span>
+            </button>
+          </div>
+
+          {isCommentOpen && (
+            <div className={styles.commentPanel}>
+              <CommentInput
+                onSubmit={async (value) => {
+                  const writerInformation = await userService.getMyProfile();
+                  const writer_id = writerInformation?.data?.user?.user_id || "";
+                  await userService.addComment(writer_id, value, selectedImage.image_id, undefined);
+                  setIsCommentAdded((prev) => !prev);
+                }}
+              />
+
+              <div className={styles.commentList}>
+                {topLevelComments.map((parent) => (
+                  <React.Fragment key={parent.comment_id}>
+                    <Comment
+                      writer_name={parent.writer.username}
+                      content={parent.content || ""}
+                      writer_profile_image={parent.writer.profile_image || "/profile_default.png"}
+                      date={parent.created_at}
+                      onReplyClick={() => setReplyTarget({ image_id: selectedImage.image_id, comment: parent })}
+                    />
+
+                    {replyTarget?.comment.comment_id === parent.comment_id && (
+                      <div className={styles.replyInput}>
+                        <CommentInput
+                          onSubmit={async (value) => {
+                            const writerInformation = await userService.getMyProfile();
+                            const writer_id = writerInformation?.data?.user?.user_id || "";
+                            await userService.addComment(writer_id, value, replyTarget.image_id, parent.comment_id);
+                            setIsCommentAdded((prev) => !prev);
+                            setReplyTarget(null);
+                          }}
+                        />
+                      </div>
+                    )}
+
+                    {parent.replies?.map((reply) => (
+                      <div key={reply.comment_id} className={styles.replyComment}>
+                        <Comment
+                          writer_name={reply.writer.username}
+                          content={reply.content || ""}
+                          writer_profile_image={reply.writer.profile_image || "/profile_default.png"}
+                          date={reply.created_at}
+                          onReplyClick={() => setReplyTarget({ image_id: selectedImage.image_id, comment: reply })}
+                        />
+                      </div>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
