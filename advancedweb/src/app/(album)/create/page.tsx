@@ -6,6 +6,7 @@ import useHandleSearchCity from "@/hooks/useHandleSearchCity";
 import UploadPhotos from "@/component/UploadPhotos";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { uploadToCloudinary } from "@/libs/cloudinary";
 
 export default function Create() {
   const { city, setCity, handleSearch, responseText, loading, isCitySearched } = useHandleSearchCity();
@@ -16,6 +17,7 @@ export default function Create() {
   const [userId, setUserId] = useState<string | null>(null);
   const [isAlbumCreated, setIsAlbumCreated] = useState<boolean>(false);
   const route = useRouter();
+
   useEffect(() => {
     fetch("/api/me")
       .then((res) => res.json())
@@ -23,6 +25,7 @@ export default function Create() {
         if (data.user?.user_id) setUserId(data.user.user_id);
       });
   }, []);
+
   const handlePhotoUpload = async (files: File[]) => {
     if (!files || files.length === 0) {
       setUploadStatus("No files selected");
@@ -41,19 +44,18 @@ export default function Create() {
       route.push(`/view/${albumId}`);
       return;
     }
+
     setUploadStatus("Uploading...");
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("file", file);
-    });
-    if (albumId) {
-      formData.append("album_id", albumId);
-    }
+
     try {
+      const urls = await Promise.all(files.map((file) => uploadToCloudinary(file)));
+
       const res = await fetch("/api/upload_image", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ urls, album_id: albumId }),
       });
+
       const data = await res.json();
       if (res.ok) {
         setUploadStatus("Upload successful");
@@ -71,9 +73,7 @@ export default function Create() {
     try {
       const res = await fetch("/api/make_album", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           city_name: city?.name,
           latitude: city?.latitude,
