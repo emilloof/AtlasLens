@@ -43,11 +43,12 @@
 }
 
 .interactionPanel {
-  width: min(72vw, 960px);
-  margin: 20px auto 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
+  margin-top: 140px;
   gap: 16px;
+  margin-right: 20px;
 }
 
 .actionRow {
@@ -62,16 +63,7 @@
   height: 5vh;
 }
 
-.commentToggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  border-radius: 999px;
-  padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.9);
-  cursor: pointer;
-}
+
 
 .commentPanel {
   display: flex;
@@ -79,11 +71,33 @@
   gap: 12px;
   padding: 16px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.92);
-  max-height: 40vh;
+  max-height: 70vh;
   overflow-y: auto;
+  scrollbar-base-color: (255,255,255,0.1);
+}
+/* 1. The total width of the scrollbar */
+.commentPanel::-webkit-scrollbar {
+  width: 6px; /* Keep it slim */
 }
 
+/* 2. The track (the background of the scrollbar) */
+.commentPanel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05); 
+  border-radius: 10px;
+  margin-block: 8px; /* Adds a little space at top/bottom */
+}
+
+/* 3. The thumb (the part you grab) */
+.commentPanel::-webkit-scrollbar-thumb {
+  background: rgba(245, 240, 230, 0.3); /* Matches your cream color */
+  border-radius: 10px;
+  border: 1px solid transparent; /* Acts as padding */
+}
+
+/* 4. Hover effect to make it feel interactive */
+.commentPanel::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 240, 230, 0.6);
+}
 .commentList {
   display: flex;
   flex-direction: column;
@@ -96,4 +110,12 @@
 
 .replyComment {
   margin-left: 2rem;
+}
+
+.galleryWrapper {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }

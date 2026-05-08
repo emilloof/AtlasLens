@@ -87,6 +87,14 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
 
   const topLevelComments = selectedImage?.comments.filter((comment) => !comment.parent_id) || [];
 
+  const handleReplyClick = (comment: CommentType) => {
+    if (replyTarget?.comment.comment_id === comment.comment_id) {
+      setReplyTarget(null);
+    } else {
+      setReplyTarget({ image_id: selectedImage!.image_id, comment });
+    }
+  };
+
   return (
     <div className="page">
       <div className={styles.backButton}>
@@ -121,7 +129,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
           </>
         )}
       </div>
-
+      <div className={styles.galleryWrapper}>
       <Gallery
         setIsCommentAdded={setIsCommentAdded}
         onSlideChange={setCurrentIndex}
@@ -132,7 +140,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
           filter: img.filter || "",
         }))}
       />
-
+     </div>
       {selectedImage && (
         <div className={styles.interactionPanel}>
           <div className={styles.actionRow}>
@@ -143,15 +151,15 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
                 isClickedBefore={likedImages.has(selectedImage.image_id)}
               />
             </div>
-            <button
+            <Button
+            size="m"
               type="button"
-              className={styles.commentToggle}
-              onClick={() => setIsCommentOpen((prev) => !prev)}
-            >
-              <Image src="/comment.png" alt="comment" width={28} height={28} />
-              <span>Comments</span>
-              <span>({selectedImage.comments.length})</span>
-            </button>
+              handleButtonClick={() => setIsCommentOpen((prev) => !prev)}
+                iconAlt="comment"
+                iconSize={28}
+                iconSrc="/comment.png"
+                name={`Comments (${selectedImage.comments.length})`}
+            />
           </div>
 
           {isCommentOpen && (
@@ -173,7 +181,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
                       content={parent.content || ""}
                       writer_profile_image={parent.writer.profile_image || "/profile_default.png"}
                       date={parent.created_at}
-                      onReplyClick={() => setReplyTarget({ image_id: selectedImage.image_id, comment: parent })}
+                      onReplyClick={() => handleReplyClick(parent)}
                     />
 
                     {replyTarget?.comment.comment_id === parent.comment_id && (
@@ -197,7 +205,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
                           content={reply.content || ""}
                           writer_profile_image={reply.writer.profile_image || "/profile_default.png"}
                           date={reply.created_at}
-                          onReplyClick={() => setReplyTarget({ image_id: selectedImage.image_id, comment: reply })}
+                          onReplyClick={() => handleReplyClick(reply)}
                         />
                       </div>
                     ))}
@@ -207,7 +215,8 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
             </div>
           )}
         </div>
-      )}
-    </div>
+        )}
+      </div>
+    
   );
 }
