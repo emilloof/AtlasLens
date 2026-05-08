@@ -5,12 +5,13 @@ import styles from "./index.module.css";
 import UploadPhotos from "@/component/UploadPhotos";
 import Button from "@/component/button";
 import { useRouter } from "next/navigation";
+import { uploadToCloudinary } from "@/libs/cloudinary";
 
 export default function Add_Image({ params }: { params: Promise<{ albumId: string }> }) {
   const [uploadStatus, setUploadStatus] = useState("");
-
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const route = useRouter();
+
   const handlePhotoUpload = async (files: File[]) => {
     if (!files || files.length === 0) {
       setUploadStatus("No files selected");
@@ -18,17 +19,16 @@ export default function Add_Image({ params }: { params: Promise<{ albumId: strin
     }
 
     setUploadStatus("Uploading...");
-    const formData = new FormData();
-    files.forEach((file) => {
-      formData.append("file", file);
-    });
-    formData.append("album_id", (await params).albumId);
 
     try {
+      const urls = await Promise.all(files.map((file) => uploadToCloudinary(file)));
+
       const res = await fetch("/api/upload_image", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ urls, album_id: (await params).albumId }),
       });
+
       const data = await res.json();
       if (res.ok) {
         setUploadStatus("Upload successful");
