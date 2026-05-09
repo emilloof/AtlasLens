@@ -6,7 +6,6 @@ import Gallery, { CommentType } from "@/component/gallery";
 import LikeButton from "@/component/LikeButton";
 import { authService } from "@/services/authService";
 import { Like, userService } from "@/services/userService";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import styles from "./index.module.css";
@@ -101,6 +100,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
         <Button
           name="<"
           size="s"
+          type="button"
           handleButtonClick={() => {
             router.push("/map");
           }}

@@ -60,6 +60,7 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded, onSlid
     
     return (
       <div className={styles.imageWrapper}>
+        <div className={styles.filterWrapper}>
         <FilterSelector
           currentFilter={extendedItem.filter}
           onChange={async (newFilter) => {
@@ -67,7 +68,7 @@ const Gallery: React.FC<GalleryProps> = ({ imagePaths, setIsCommentAdded, onSlid
             extendedItem.filter = newFilter;
             setIsCommentAdded((prev) => !prev);
           }}
-        />
+        /></div>
         <Image
           src={extendedItem.original}
           className={extendedItem.filter || ""}

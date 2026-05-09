@@ -108,8 +108,9 @@ a {
   --z-index-comment: 1000;
   --z-index-comment-btn: 10;
   --z-index-filter-selector: 1000;
+  --z-index-button: 2000;
   --color-orange: #ffa868;
-  --color-orange2: #ff9453;
+  --color-orange2: #c97744;
   --color-orange-hover: rgba(255, 168, 104, 0.4);
   --color-orange-shadow: rgba(255, 168, 104, 0.2);
 

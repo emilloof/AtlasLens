@@ -44,9 +44,25 @@
   position: absolute;
   left: 8px;
 }
-.imageWrapper{
-  height: 40vw;
+.imageWrapper {
+  position: relative;
+  display: inline-block;
   width: 60vw;
-  display: "flex",
-      
-        }
+  height: 40vw;
+  overflow: hidden;
+}
+
+.filterWrapper {
+  position: absolute;
+  inset: auto 16px 16px auto;
+  top: auto;
+  left: auto;
+  right: 64px;
+  bottom: 26px;
+  z-index: var(--z-index-filter-selector);
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+
