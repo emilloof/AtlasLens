@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'advancedweb/**'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - 'advancedweb/**'
+      - '.github/workflows/ci.yml'
+
+jobs:
+  test-and-build:
+    name: Test and Build (advancedweb)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: advancedweb
+    env:
+      CI: true
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: advancedweb/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Jest tests
+        run: npm run test:ci
+
+      - name: Build project
+        run: npm run build
