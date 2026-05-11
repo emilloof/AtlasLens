@@ -1,6 +1,8 @@
 "use client";
 import { authService } from "@/services/authService";
 import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function useHandleSignUp() {
   const [email, setEmail] = useState("");
@@ -11,6 +13,7 @@ export default function useHandleSignUp() {
   const [errorMessage, setErrorMessage] = useState<{ idError?: string; nameError?: string; passwordError?: string }>(
     {}
   );
+  const router = useRouter();
 
   const [signinSuccessMessage, setSigninSuccessMessage] = useState("");
 
@@ -43,6 +46,8 @@ export default function useHandleSignUp() {
         setEmail("");
         setUserName("");
         setPassword("");
+        router.push("/map");
+        
       } else {
         if (res.error) {
           setSigninSuccessMessage(res.error);

@@ -9,12 +9,13 @@ import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "@/libs/cloudinary";
 
 export default function Create() {
-  const { city, setCity, handleSearch, responseText, loading } = useHandleSearchCity();
+  const { city, setCity, handleSearch, responseText, loading, isCitySearched } = useHandleSearchCity();
   const [uploadStatus, setUploadStatus] = useState<string>("");
   const [isPhotoUploaded, setIsPhotoUploaded] = useState<boolean>(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [albumId, setAlbumId] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [isAlbumCreated, setIsAlbumCreated] = useState<boolean>(false);
   const route = useRouter();
 
   useEffect(() => {
@@ -26,6 +27,11 @@ export default function Create() {
   }, []);
 
   const handlePhotoUpload = async (files: File[]) => {
+    if (isPhotoUploaded && albumId) {
+      route.push(`/view/${albumId}`);
+      return;
+    }
+
     if (!files || files.length === 0) {
       setUploadStatus("No files selected");
       return;
@@ -34,7 +40,7 @@ export default function Create() {
       setUploadStatus("Please create an album before uploading photos");
       return;
     }
-    if (city === undefined) {
+    if (!city) {
       setUploadStatus("Please enter a city before uploading photos");
       return;
     }
@@ -85,8 +91,10 @@ export default function Create() {
       if (res.ok) {
         setUploadStatus("Album created successfully!");
         setAlbumId(data.body.album_id);
+        setIsAlbumCreated(true);
       } else {
         setUploadStatus(`Failed to create album: ${data.error || "Unknown error"}`);
+         setIsAlbumCreated(false);
       }
     } catch (error) {
       setUploadStatus(`Failed to create album: ${error instanceof Error ? error.message : "Unknown error"}`);
@@ -94,39 +102,69 @@ export default function Create() {
   };
 
   return (
-    <div className={styles.pageWrapper}>
+    <div className="page">
+      <div className={styles.backButton}>
+        <Button  name="<" size="s" handleButtonClick={() => route.push("/map")} />
+      </div>
       <section className={styles.inputWrapper}>
-        <section className={styles.searchFormWrapper}>
-          <form className={styles.formWrapper} onSubmit={handleSearch}>
-            <Input
-              size="m"
-              label="city"
-              placeholder="Please enter a city"
-              type="text"
-              value={city?.name || ""}
-              onChange={(e) => {
-                setCity({ ...city, name: e.target.value });
-              }}
-              errorMessage={""}
-            />
-          </form>
-          <Button name={loading ? "Loading... " : "Search"} size="s" handleButtonClick={handleSearch} />
-        </section>
-        <Button name={"Create Album"} size="l" handleButtonClick={handleAlbumUpload} />
-
-        {responseText && (
-          <section className={styles.responseWrapper}>
-            <p>{responseText}</p>
-          </section>
+        {!isAlbumCreated && (
+          <>
+            <section className={styles.searchFormWrapper}>
+              <form className={styles.formWrapper} onSubmit={handleSearch}>
+                <Input
+                  size="m"
+                  label="city"
+                  placeholder="Please enter a city"
+                  type="text"
+                  value={city?.name || ""}
+                  onChange={(e) => {
+                    setCity({ ...city, name: e.target.value });
+                  }}
+                  errorMessage={""}
+                />
+              </form>
+              <Button name={loading ? "Loading... " : "Search"} size="s" handleButtonClick={handleSearch} />
+            </section>
+            {responseText && (
+              <section className={styles.responseWrapper}>
+                <p>{responseText}</p>
+              </section>
+            )}
+            {isCitySearched && (
+              <>
+                <Button name={"Create Album"} size="l" handleButtonClick={handleAlbumUpload} />
+                {uploadStatus && (<div>{uploadStatus}</div>)}
+              </>
+            )}
+          </>
         )}
 
-        <UploadPhotos setSelectedFiles={setSelectedFiles} />
-        {uploadStatus && <div>{uploadStatus}</div>}
-        <Button
-          name={isPhotoUploaded ? "Go to Album" : "Upload Photos"}
-          size="l"
-          handleButtonClick={() => handlePhotoUpload(selectedFiles)}
-        />
+        {isAlbumCreated && (
+          <>
+            <UploadPhotos setSelectedFiles={setSelectedFiles} isPhotoUploaded={isPhotoUploaded} albumID={albumId} />
+            {uploadStatus && <div>{uploadStatus}</div>}
+      
+            {isPhotoUploaded && (<div className={styles.buttonWrapper}>
+                <Button
+              name={"Go to Album"}
+              size="s"
+              handleButtonClick={() => handlePhotoUpload(selectedFiles)}
+            />
+              <Button
+              name={"Go to Map"}
+              size="s"
+              handleButtonClick={() => route.push("/map")}
+            /></div>
+            )}
+            {!isPhotoUploaded &&
+              <Button
+              name={"Upload Photos"}
+              size="l"
+              handleButtonClick={() => handlePhotoUpload(selectedFiles)}
+            />}
+        
+          </>
+        )}
       </section>
     </div>
   );

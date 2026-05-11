@@ -1,4 +1,4 @@
-@import "../styles/color.css";
+
 @import "../styles/z-index.css";
 @import "../styles/filter.css";
 
@@ -35,7 +35,7 @@
   position: absolute;
   right: 0;
   border-radius: 10px;
-  top: 8px;
+  top: -8px;
   right: 8px;
   z-index: var(--z-index-comment-btn);
 }
@@ -44,3 +44,25 @@
   position: absolute;
   left: 8px;
 }
+.imageWrapper {
+  position: relative;
+  display: inline-block;
+  width: 60vw;
+  height: 40vw;
+  overflow: hidden;
+}
+
+.filterWrapper {
+  position: absolute;
+  inset: auto 16px 16px auto;
+  top: auto;
+  left: auto;
+  right: 64px;
+  bottom: 26px;
+  z-index: var(--z-index-filter-selector);
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+

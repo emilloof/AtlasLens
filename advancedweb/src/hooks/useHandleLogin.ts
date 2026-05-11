@@ -42,9 +42,8 @@ export default function useHandleLogin() {
         setEmail("");
         setPassword("");
 
-        setTimeout(() => {
-          router.push("/map");
-        }, 1000);
+        router.push("/map");
+
       } catch (error) {
         setErrorMessage({
           serverError: error instanceof Error ? error.message : "An unexpected error occurred",

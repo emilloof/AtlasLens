@@ -20,12 +20,13 @@ export default function SignUp() {
   } = useHandleSignUp();
 
   return (
-    <div className={styles.pageWrapper}>
+    <div className="page">
       <section className={styles.inputWrapper}>
+        <section className={styles.inputSection}>
         <Input
           size="l"
-          label="id"
-          placeholder="Please enter the id"
+          label="Email"
+          placeholder="Please enter email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
           type="text"
@@ -33,8 +34,8 @@ export default function SignUp() {
         />
         <Input
           size="l"
-          label="name"
-          placeholder="Please enter the name"
+          label="Name"
+          placeholder="Please enter name"
           onChange={(e) => setUserName(e.target.value)}
           value={userName}
           type="text"
@@ -42,19 +43,22 @@ export default function SignUp() {
         />
         <Input
           size="l"
-          label="password"
-          placeholder="Please enter the password"
+          label="Password"
+          placeholder="Please enter password"
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           errorMessage={errorMessage.passwordError}
-        />
+          />
+        </section>
+         <p className={styles.successMessage}>{signinSuccessMessage}</p>
         <Button
           name={isSignedUp ? "Go to Mymap" : "signup"}
           size="l"
           handleButtonClick={isSignedUp ? () => router.push("/map") : handleSubmit}
         />
-        <p className={styles.successMessage}>{signinSuccessMessage}</p>
+       
+            <Button name="Back to login" size="s" handleButtonClick={() => router.push("/login")} />
       </section>
     </div>
   );

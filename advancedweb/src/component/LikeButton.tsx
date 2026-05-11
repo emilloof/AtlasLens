@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import like_empty from "../../public/like_empty.png";
 import like_full from "../../public/like_full.png";
 import Image from "next/image";
@@ -14,6 +14,10 @@ export default function LikeButton({
   isClickedBefore: boolean;
 }) {
   const [isClicked, setIsClicked] = useState(isClickedBefore);
+
+  useEffect(() => {
+    setIsClicked(isClickedBefore);
+  }, [image_id, isClickedBefore]);
 
   const handleClick = () => {
     setIsClicked((prev) => !prev);

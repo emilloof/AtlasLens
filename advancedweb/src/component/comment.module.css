@@ -1,5 +1,4 @@
 @import "@/styles/z-index.css";
-@import "@/styles/color.css";
 
 .comment_header {
   display: flex;
@@ -26,7 +25,7 @@
   align-items: center;
   color: white;
   font-size: 14px;
-  padding: 8px;
+ 
   white-space: pre-wrap;
   word-break: break-word;
   overflow-wrap: break-word;
@@ -35,10 +34,10 @@
 .comment_wrapper {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 12px;
+  gap: 4px;
+  padding: 8px;
   border-radius: 8px;
-  background-color: var(--color-04);
+  background-color: var(--color-orange2);
   z-index: var(--z-index-comment);
   position: relative;
 

@@ -5,23 +5,9 @@
   align-items: center;
 }
 
-.galleryButtons {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 100vw;
 
-  position: relative;
-}
 
-.button {
-  all: unset;
-  cursor: pointer;
-  position: absolute;
-  width: 36px;
-  height: 36px;
-  margin: 6px;
-}
+
 .pageWrapper {
   height: 100vh;
   width: 100vw;
@@ -32,17 +18,106 @@
   align-items: center;
   overflow: visible;
 }
-.rightBtnWrapper {
-  display: flex;
-  position: fixed;
-  left: 60px;
-}
-.rightbutton {
-  all: unset;
-  cursor: pointer;
+
+
+
+.backButton {
   position: absolute;
-  width: 36px;
-  height: 36px;
-  margin: 6px;
-  left: 40px;
+  top: 20px;
+  left: 20px;
+}
+
+
+
+.galleryButtons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.interactionPanel {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  max-height: 100vh;
+  margin-top: 20px;
+  gap: 16px;
+  margin-right: 20px;
+  position: absolute;
+  right: 0;
+}
+
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.likeSlot {
+  position: relative;
+  width: 5vh;
+  height: 5vh;
+}
+
+
+
+.commentPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-base-color: (255,255,255,0.1);
+}
+/* 1. The total width of the scrollbar */
+.commentPanel::-webkit-scrollbar {
+  width: 6px; /* Keep it slim */
+}
+
+/* 2. The track (the background of the scrollbar) */
+.commentPanel::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05); 
+  border-radius: 10px;
+  margin-block: 8px; /* Adds a little space at top/bottom */
+}
+
+/* 3. The thumb (the part you grab) */
+.commentPanel::-webkit-scrollbar-thumb {
+  background: rgba(245, 240, 230, 0.3); /* Matches your cream color */
+  border-radius: 10px;
+  border: 1px solid transparent; /* Acts as padding */
+}
+
+/* 4. Hover effect to make it feel interactive */
+.commentPanel::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 240, 230, 0.6);
+}
+.commentList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.replyInput {
+  margin-left: 2rem;
+}
+
+.replyComment {
+  margin-left: 2rem;
+}
+
+.galleryWrapper {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position : absolute;
+  top : 20px;
+  right:0;
+
 }

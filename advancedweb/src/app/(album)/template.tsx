@@ -14,13 +14,13 @@ export default function AlbumTemplate({
       <div className={styles.templateButtonWrapper}>
         <Button
           name="Logout"
-          size="m"
+          size="s"
           handleButtonClick={() => {
             authService.signout();
             router.push("/");
           }}
         />
-        <Button name="mypage" size="m" handleButtonClick={() => router.push("/mypage")} />
+        <Button name="My Page" size="s" handleButtonClick={() => router.push("/mypage")} />
       </div>
       {children}
     </div>

@@ -21,7 +21,7 @@ export default function CommentInput({ onSubmit }: { onSubmit?: (comment: string
         id="commentInput"
         rows={3}
       />
-      <Button name="send" size="s" type="submit" />
+      <Button name="➤" size="m" type="submit" className={styles.button} />
     </form>
   );
 }

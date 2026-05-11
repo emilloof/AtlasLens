@@ -10,23 +10,26 @@ export default function AlbumTemplate({
 }>) {
   const router = useRouter();
   return (
-    <div className={styles.pageWrapper}>
+    <div className="page">
+      <div className={styles.backButton}>
+        <Button
+          name="<"
+          size="s"
+          handleButtonClick={() => {
+            router.back();
+          }}
+        />
+      </div>
       <div className={styles.templateButtonWrapper}>
         <Button
           name="Logout"
-          size="m"
+          size="s"
           handleButtonClick={() => {
             authService.signout();
             router.push("/");
           }}
         />
-        <Button
-          name="Back"
-          size="m"
-          handleButtonClick={() => {
-            router.back();
-          }}
-        />
+        
       </div>
       {children}
     </div>
