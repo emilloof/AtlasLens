@@ -37,6 +37,7 @@ export default function useHandleSearchCity() {
         setIsCitySearched(false);
       }
     } catch (error) {
+      setLoading(false);
       setResponseText(`City not found. ${error}`);
       setIsCitySearched(false);
     }
