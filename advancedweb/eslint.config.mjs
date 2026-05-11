@@ -18,6 +18,9 @@ const eslintConfig = [
       "dist/**",
     ],
   },
+  {
+  "ignorePatterns": ["**/__tests__/**", "**/*.test.ts"],
+  },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
