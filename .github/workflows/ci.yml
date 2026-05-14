@@ -20,9 +20,11 @@ jobs:
   test-and-build:
     name: Test and Build (advancedweb)
     runs-on: ubuntu-latest
+    
     defaults:
       run:
         working-directory: advancedweb
+
     env:
       CI: true
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -34,25 +36,37 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
           cache-dependency-path: advancedweb/package-lock.json
 
       - name: Install dependencies
         run: npm ci
+        env:
+          # This prevents the 'postinstall' script from crashing if it runs automatically
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PRISMA_SKIP_POSTINSTALL_GENERATE: true
 
-      # This step confirms the secret is actually reaching the runner
       - name: Verify Environment
         run: |
           if [ -z "$DATABASE_URL" ]; then
-            echo "ERROR: DATABASE_URL is not set. Check GitHub Secrets."
+            echo "ERROR: DATABASE_URL secret is not found or empty."
             exit 1
           else
-            echo "DATABASE_URL is confirmed."
+            echo "DATABASE_URL is successfully mapped."
           fi
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Run Jest tests
         run: npm run test:ci
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
       - name: Build project
         run: npm run build
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
