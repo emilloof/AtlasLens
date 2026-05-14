@@ -41,9 +41,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # This step confirms the secret is actually reaching the runner
+      - name: Verify Environment
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "ERROR: DATABASE_URL is not set. Check GitHub Secrets."
+            exit 1
+          else
+            echo "DATABASE_URL is confirmed."
+          fi
+
       - name: Run Jest tests
         run: npm run test:ci
 
       - name: Build project
         run: npm run build
-        
