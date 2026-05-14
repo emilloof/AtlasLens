@@ -25,6 +25,7 @@ jobs:
         working-directory: advancedweb
     env:
       CI: true
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Checkout repository
@@ -45,3 +46,4 @@ jobs:
 
       - name: Build project
         run: npm run build
+        
