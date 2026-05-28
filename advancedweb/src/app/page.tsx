@@ -1,13 +1,17 @@
 "use client";
 import styles from "./page.module.css";
 import Link from "next/link";
+import Image, { type StaticImageData } from "next/image";
 import { useState, useEffect } from "react";
+import mapExample from "../../public/map_example.png";
+import uploadExample from "../../public/upload_example.png";
+import commentExample from "../../public/comment_example.png";
 
 interface SlideShowItem {
   id: number;
   title: string;
   description: string;
-  imagePath: string;
+  image: StaticImageData;
 }
 
 export default function Home() {
@@ -18,25 +22,25 @@ export default function Home() {
       id: 1,
       title: "Explore the Map",
       description: "Discover photos pinned across the globe",
-      imagePath: "/map_example.png",
+      image: mapExample,
     },
     {
       id: 2,
       title: "Create Albums",
       description: "Organize memories by trip or city",
-      imagePath: "/upload_example.png",
+      image: uploadExample,
     },
     {
       id: 3,
       title: "Share Moments",
       description: "Invite others to relive your adventures",
-      imagePath: "/comment_example.png",
+      image: commentExample,
     },
     /*{
       id: 4,
       title: "Revisit Memories",
       description: "Interact with comments, likes, and filters",
-      imagePath: "/comment_example.png",
+      image: commentExample,
     },*/
   ];
 
@@ -125,7 +129,13 @@ export default function Home() {
                   className={`${styles.slide} ${index === currentSlide ? styles.active : ""}`}
                 >
                   <div className={styles.slideImage}>
-                    <img className={styles.slideMedia} src={slide.imagePath} alt={slide.title} />
+                    <Image
+                      className={styles.slideMedia}
+                      src={slide.image}
+                      alt={slide.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 60vw"
+                    />
                   </div>
                   <div className={styles.slideContent}>
                     <h3>{slide.title}</h3>
