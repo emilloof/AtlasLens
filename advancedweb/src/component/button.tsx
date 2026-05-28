@@ -8,6 +8,7 @@ type ButtonProps = {
   iconSrc?: string;
   iconAlt?: string;
   iconSize?: number;
+  isLoading?: boolean;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 export default function Button({
@@ -17,11 +18,23 @@ export default function Button({
   iconSrc,
   iconAlt,
   iconSize = 18,
+  isLoading = false,
+  disabled,
   ...rest
 }: ButtonProps) {
+  const isDisabled = isLoading || disabled;
+
   return (
-    <button type="button" className={styles[size]} onClick={handleButtonClick} {...rest}>
-      {iconSrc ? (
+    <button
+      type="button"
+      className={styles[size]}
+      onClick={handleButtonClick}
+      disabled={isDisabled}
+      aria-busy={isLoading}
+      {...rest}
+    >
+      {isLoading ? <span className={styles.spinner} aria-hidden="true" /> : null}
+      {!isLoading && iconSrc ? (
         <img
           src={iconSrc}
           alt={iconAlt ?? "button icon"}
@@ -31,7 +44,7 @@ export default function Button({
           loading="eager"
         />
       ) : null}
-      {name}
+      <span>{isLoading ? "Loading..." : name}</span>
     </button>
   );
 }

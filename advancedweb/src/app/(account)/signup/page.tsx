@@ -16,6 +16,7 @@ export default function SignUp() {
     signinSuccessMessage,
     handleSubmit,
     errorMessage,
+    isLoading,
     isSignedUp,
   } = useHandleSignUp();
 
@@ -55,6 +56,7 @@ export default function SignUp() {
         <Button
           name={isSignedUp ? "Go to Mymap" : "signup"}
           size="l"
+          isLoading={isLoading}
           handleButtonClick={isSignedUp ? () => router.push("/map") : handleSubmit}
         />
        
