@@ -71,3 +71,26 @@ box-shadow: 0 0 30px var(--color-orange-hover);
   object-fit: contain;
   border-radius: 999px;
 }
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 2px solid rgba(0, 0, 0, 0.25);
+  border-top-color: rgba(0, 0, 0, 0.9);
+  animation: spin 0.8s linear infinite;
+}
+
+.l:disabled,
+.m:disabled,
+.s:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+  transform: none;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

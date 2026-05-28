@@ -18,26 +18,26 @@ export default function Home() {
       id: 1,
       title: "Explore the Map",
       description: "Discover photos pinned across the globe",
-      imagePath: "/screenshots/explore.jpg",
+      imagePath: "/map_example.png",
     },
     {
       id: 2,
       title: "Create Albums",
       description: "Organize memories by trip or city",
-      imagePath: "/screenshots/albums.jpg",
+      imagePath: "/upload_example.png",
     },
     {
       id: 3,
       title: "Share Moments",
       description: "Invite others to relive your adventures",
-      imagePath: "/screenshots/share.jpg",
+      imagePath: "/comment_example.png",
     },
-    {
+    /*{
       id: 4,
       title: "Revisit Memories",
       description: "Interact with comments, likes, and filters",
-      imagePath: "/screenshots/memories.jpg",
-    },
+      imagePath: "/comment_example.png",
+    },*/
   ];
 
   useEffect(() => {
@@ -125,13 +125,7 @@ export default function Home() {
                   className={`${styles.slide} ${index === currentSlide ? styles.active : ""}`}
                 >
                   <div className={styles.slideImage}>
-                    <div className={styles.imagePlaceholder}>
-                      {/* Replace with actual image when screenshots are available */}
-                      <div className={styles.placeholderContent}>
-                        <div className={styles.placeholderIcon}>📸</div>
-                        <p>{slide.title}</p>
-                      </div>
-                    </div>
+                    <img className={styles.slideMedia} src={slide.imagePath} alt={slide.title} />
                   </div>
                   <div className={styles.slideContent}>
                     <h3>{slide.title}</h3>
