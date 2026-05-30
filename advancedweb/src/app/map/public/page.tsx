@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import styles from "../index.module.css";
+import styles from "./index.module.css";
 import useHandlePublicMap from "@/hooks/useHandlePublicMap";
 
 const MapComponent = dynamic(() => import("@/component/LeafletMap"), { ssr: false });
@@ -11,7 +11,7 @@ export default function PublicMapPage() {
 
   return (
     <div className={styles.pageWrapper}>
-      <MapComponent albums={albums} showOwnership={false} />
+      <MapComponent albums={albums} showOwnership={false} canOpenAlbum={false} />
     </div>
   );
 }

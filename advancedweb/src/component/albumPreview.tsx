@@ -9,14 +9,36 @@ interface AlbumPreviewProps {
   height?: number;
   interact?: boolean;
   albumID: string | null;
+  canOpenAlbum?: boolean;
 }
 
-const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height = 100, interact = false, albumID }) => {
+const AlbumPreview: React.FC<AlbumPreviewProps> = ({
+  images,
+  width = 150,
+  height = 100,
+  interact = false,
+  albumID,
+  canOpenAlbum = true,
+}) => {
   images = images.slice(0, 5);
   const router = useRouter();
+  const [showLoginPrompt, setShowLoginPrompt] = React.useState(false);
+
+  const handleClick = () => {
+    if (!interact || !albumID || showLoginPrompt) {
+      return;
+    }
+
+    if (!canOpenAlbum) {
+      setShowLoginPrompt(true);
+      return;
+    }
+
+    router.push("/view/" + albumID);
+  };
 
   return (
-    <div className={`${styles.stack} ${interact ? styles.interact : ''}`} style={{ width, height }} onClick={() => {router.push("/view/" + albumID)}}>
+    <div className={`${styles.stack} ${interact ? styles.interact : ''} ${showLoginPrompt ? styles.loginRequired : ''}`} style={{ width, height }} onClick={handleClick}>
       {images.map((src, index) => (
         <Image
           key={index}
@@ -24,7 +46,7 @@ const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height
           alt={`Photo ${index + 1}`}
           className={styles.photo}
           width={width}
-           height={height}
+          height={height}
           style={{
             zIndex: images.length - index,
             top: index * 5,
@@ -33,6 +55,16 @@ const AlbumPreview: React.FC<AlbumPreviewProps> = ({ images, width = 150, height
           }}
         />
       ))}
+      {showLoginPrompt && (
+        <div
+          className={styles.loginPrompt}
+          onClick={() => {
+            router.push("/login");
+          }}
+        >
+          <p>Log in to view</p>
+        </div>
+      )}
     </div>
   );
 };

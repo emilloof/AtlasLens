@@ -34,6 +34,14 @@ export const authService = {
       method: "POST",
       body: {},
     }),
+  isLoggedIn: async (): Promise<boolean> => {
+    const response = await fetch("/api/me", {
+      method: "GET",
+      credentials: "include",
+    });
+
+    return response.ok;
+  },
   checkIsMyAlbum(album_id: string): Promise<ApiResponse<{ isOwner: boolean }>> {
     return apiRequest<{ isOwner: boolean }>(`album/check_ownership?album_id=${encodeURIComponent(album_id)}`, {
       method: "GET",

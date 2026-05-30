@@ -1,6 +1,9 @@
 .stack {
     position: relative;
     cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
    }
   
   .photo {
@@ -11,9 +14,31 @@
     border-radius: 6px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s ease;
+    cursor: pointer;
   }
   
   
   .interact .photo:hover {
     transform: scale(1.02) rotate(1deg) !important;
+  }
+
+  .loginRequired {
+    cursor: default;
+  }
+
+  .loginPrompt {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 60px;
+    width: 90%;
+    background: #000000a3;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 99999;
+    cursor: pointer;
   }

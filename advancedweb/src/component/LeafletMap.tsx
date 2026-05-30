@@ -19,10 +19,14 @@ L.Icon.Default.mergeOptions({
 const greenPin = L.icon({
   iconUrl: "/green_pin.png",
   iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -36],
 });
 const redPin = L.icon({
   iconUrl: "/red_pin.png",
   iconSize: [40, 40],
+  iconAnchor: [20, 40],
+  popupAnchor: [0, -36],
 });
 
 interface AlbumData {
@@ -35,9 +39,11 @@ interface AlbumData {
 export default function LeafletMap({
   albums,
   showOwnership = true,
+  canOpenAlbum = true,
 }: {
   albums: AlbumData[];
   showOwnership?: boolean;
+  canOpenAlbum?: boolean;
 }) {
   const [position, setPosition] = useState<[number, number] | null>([58.4059049, 15.5992799]);
   const [ownershipMap, setOwnershipMap] = useState<Record<string, boolean>>({});
@@ -104,7 +110,7 @@ export default function LeafletMap({
             ? ownershipMap[album.album_id]
               ? greenPin
               : redPin
-            : redPin;
+            : greenPin;
 
           return (
             <Marker key={album.album_id} position={[album.latitude, album.longitude]} icon={icon}>
@@ -122,6 +128,7 @@ export default function LeafletMap({
                     height={100}
                     interact={true}
                     albumID={album.album_id}
+                    canOpenAlbum={canOpenAlbum}
                   />
                 </div>
               </Popup>
