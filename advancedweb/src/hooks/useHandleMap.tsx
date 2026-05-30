@@ -23,12 +23,11 @@ export default function useHandleMap() {
       const dataMe = await resMe.json();
       const userId = dataMe.user.user_id;
 
-      console.log("User ID:", userId);
       // 2. Fetch albums for this user
       const resAlbums = await fetch("/api/mymap", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId }), // <-- send userId, not me
+        body: JSON.stringify({ user_id: userId }),
       });
       if (resAlbums.ok) {
         const dataAlbums = await resAlbums.json();

@@ -45,13 +45,13 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    // Auto-advance slideshow every 5 seconds
-    const interval = setInterval(() => {
+    // Auto-advance slideshow every 5 seconds, restarting after any slide change
+    const timeout = setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
 
-    return () => clearInterval(interval);
-  }, [slides.length]);
+    return () => clearTimeout(timeout);
+  }, [currentSlide, slides.length]);
 
   return (
     <div className={styles.page}>
@@ -179,10 +179,10 @@ export default function Home() {
       {/* CTA section */}
       <section className={styles.finalCta}>
         <div className={styles.ctaContent}>
-          <h2>Ready to map your memories?</h2>
-          <p>Join travelers preserving their stories across the world</p>
-          <Link href="/signup" className={styles.ctaPrimaryLarge}>
-            Create your free account
+          <h2>Not sure what AtlasLens is?</h2>
+          <p>Browse the public map to see albums that creators have shared publicly.</p>
+          <Link href="/map/public" className={styles.ctaPrimaryLarge}>
+            Explore the public map
           </Link>
         </div>
       </section>

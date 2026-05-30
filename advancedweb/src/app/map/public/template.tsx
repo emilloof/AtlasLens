@@ -1,31 +1,27 @@
 "use client";
 import Button from "@/component/button";
-import { authService } from "@/services/authService";
 import styles from "./index.module.css";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 export default function MapTemplate({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const router = useRouter();
-  const pathname = usePathname();
-  const isPublicMap = pathname === "/map/public";
   return (
     <div className={styles.pageWrapper}>
-      {!isPublicMap && (
+      <div className={styles.buttonWrapper}>
+        </div>
         <div className={styles.templateButtonWrapper}>
           <Button
-            name="Logout"
-            size="s"
+            name="Leave Public Map"
+            size="l"
             handleButtonClick={() => {
-              authService.signout();
               router.push("/");
             }}
           />
-          <Button name="My Page" size="s" handleButtonClick={() => router.push("/mypage")} />
+
         </div>
-      )}
       {children}
     </div>
   );

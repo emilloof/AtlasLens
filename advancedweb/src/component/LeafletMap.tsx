@@ -1,13 +1,12 @@
 "use client";
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { useEffect, useState } from "react";
 
 import AlbumPreview from "./albumPreview";
 import { authService } from "@/services/authService";
-
+ 
 // Fix: Markers don't show up without this in Next.js
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -33,7 +32,13 @@ interface AlbumData {
   images: Array<{ url: string }>;
 }
 
-export default function LeafletMap({ albums }: { albums: AlbumData[] }) {
+export default function LeafletMap({
+  albums,
+  canOpenAlbum = true,
+}: {
+  albums: AlbumData[];
+  canOpenAlbum?: boolean;
+}) {
   const [position, setPosition] = useState<[number, number] | null>([58.4059049, 15.5992799]);
   const [ownershipMap, setOwnershipMap] = useState<Record<string, boolean>>({});
 
@@ -56,6 +61,7 @@ export default function LeafletMap({ albums }: { albums: AlbumData[] }) {
     }
   }, []);
   useEffect(() => {
+
     const fetchOwnership = async () => {
       const newMap: Record<string, boolean> = {};
 
@@ -110,6 +116,7 @@ export default function LeafletMap({ albums }: { albums: AlbumData[] }) {
                     height={100}
                     interact={true}
                     albumID={album.album_id}
+                    canOpenAlbum={canOpenAlbum}
                   />
                 </div>
               </Popup>
