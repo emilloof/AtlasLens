@@ -25,7 +25,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [replyTarget, setReplyTarget] = useState<{ image_id: string; comment: CommentType } | null>(null);
   const [likedImages, setLikedImages] = useState<Set<string>>(new Set());
-
+const [isAlbumPublic, setIsAlbumPublic] = useState<boolean>(false);
   const { albumId } = React.use(params);
   const router = useRouter();
 
@@ -44,6 +44,7 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
       }
       const album = await res.json();
       setImages(album.data.images);
+      setIsAlbumPublic(album.data.is_public);
     } catch (error) {
       console.error("Error fetching images:", error);
     }
@@ -61,6 +62,15 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
       }
       return next;
     });
+  };
+
+  const handleTogglePublicPrivate = async () => {
+    const newStatus = !isAlbumPublic;
+    await fetch(`/api/album/update_public`, { 
+      method: 'PATCH', 
+      body: JSON.stringify({ albumId, is_public: newStatus }) 
+    });
+    setIsAlbumPublic(newStatus);
   };
 
   useEffect(() => {
@@ -125,6 +135,12 @@ export default function Album({ params }: { params: Promise<{ albumId: string }>
               iconSrc="/add_image.png"
               iconAlt="addImage"
               iconSize={36}
+            />
+            <Button
+              name={isAlbumPublic ? "Private" : "Public"}
+              size="s"
+              type="button"
+              handleButtonClick={handleTogglePublicPrivate}
             />
           </>
         )}
