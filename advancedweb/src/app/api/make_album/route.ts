@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
   if (!token || !SECRET_KEY) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  const { city_name, latitude, longitude, users } = await req.json();
+  const { city_name, latitude, longitude, users , is_public} = await req.json();
   const album_id = crypto.randomUUID();
   try {
     await prisma.album.create({
@@ -19,6 +19,7 @@ export async function POST(req: NextRequest) {
         city_name,
         latitude,
         longitude,
+        is_public,
       },
     });
 

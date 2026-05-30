@@ -84,6 +84,7 @@ export default function Create() {
           latitude: city?.latitude,
           longitude: city?.longitude,
           users: userId ? [userId] : [],
+          is_public: (document.getElementById("isPublic") as HTMLInputElement)?.checked || false,
         }),
       });
       const data = await res.json();
@@ -132,8 +133,20 @@ export default function Create() {
             )}
             {isCitySearched && (
               <>
+                <div className={styles.checkboxWrapper}>
+                  <input
+                    type="checkbox"
+                    id="isPublic"
+                    name="make album public"
+                    className={styles.checkbox}
+                  />
+                  <label htmlFor="isPublic" className={styles.checkboxLabel}>
+                    <span className={styles.toggleSwitch}></span>
+                    Make album public
+                  </label>
+                </div>
                 <Button name={"Create Album"} size="l" handleButtonClick={handleAlbumUpload} />
-                {uploadStatus && (<div>{uploadStatus}</div>)}
+                {uploadStatus && (<div className={styles.statusMessage}>{uploadStatus}</div>)}
               </>
             )}
           </>
