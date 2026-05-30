@@ -110,7 +110,7 @@ export default function LeafletMap({
             ? ownershipMap[album.album_id]
               ? greenPin
               : redPin
-            : greenPin;
+            : redPin;
 
           return (
             <Marker key={album.album_id} position={[album.latitude, album.longitude]} icon={icon}>
