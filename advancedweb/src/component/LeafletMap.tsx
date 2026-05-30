@@ -19,14 +19,10 @@ L.Icon.Default.mergeOptions({
 const greenPin = L.icon({
   iconUrl: "/green_pin.png",
   iconSize: [40, 40],
-  iconAnchor: [20, 40],
-  popupAnchor: [0, -36],
 });
 const redPin = L.icon({
   iconUrl: "/red_pin.png",
   iconSize: [40, 40],
-  iconAnchor: [20, 40],
-  popupAnchor: [0, -36],
 });
 
 interface AlbumData {
@@ -38,11 +34,9 @@ interface AlbumData {
 
 export default function LeafletMap({
   albums,
-  showOwnership = true,
   canOpenAlbum = true,
 }: {
   albums: AlbumData[];
-  showOwnership?: boolean;
   canOpenAlbum?: boolean;
 }) {
   const [position, setPosition] = useState<[number, number] | null>([58.4059049, 15.5992799]);
@@ -67,10 +61,6 @@ export default function LeafletMap({
     }
   }, []);
   useEffect(() => {
-    if (!showOwnership) {
-      setOwnershipMap({});
-      return;
-    }
 
     const fetchOwnership = async () => {
       const newMap: Record<string, boolean> = {};
@@ -88,7 +78,7 @@ export default function LeafletMap({
     };
 
     fetchOwnership();
-  }, [albums, showOwnership]);
+  }, [albums]);
   return (
     <div style={{ height: "100vh", width: "100%" }}>
       <MapContainer
@@ -106,11 +96,9 @@ export default function LeafletMap({
           attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
         />
         {albums.map((album) => {
-          const icon = showOwnership
-            ? ownershipMap[album.album_id]
-              ? greenPin
-              : redPin
-            : redPin;
+          const isOwner = ownershipMap[album.album_id];
+          if (isOwner === undefined) return null;
+          const icon = isOwner ? greenPin : redPin;
 
           return (
             <Marker key={album.album_id} position={[album.latitude, album.longitude]} icon={icon}>

@@ -11,7 +11,7 @@ export default function PublicMapPage() {
 
   return (
     <div className={styles.pageWrapper}>
-      <MapComponent albums={albums} showOwnership={false} canOpenAlbum={false} />
+      <MapComponent albums={albums} canOpenAlbum={false} />
     </div>
   );
 }
