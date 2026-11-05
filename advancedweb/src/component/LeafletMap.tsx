@@ -92,7 +92,7 @@ export default function LeafletMap({
         worldCopyJump={false}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+          url={`https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=${process.env.NEXT_PUBLIC_TILELAYER_API_KEY}`}
           attribution='&copy; <a href="https://www.carto.com/">CARTO</a>'
         />
         {albums.map((album) => {

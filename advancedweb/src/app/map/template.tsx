@@ -2,18 +2,20 @@
 import Button from "@/component/button";
 import { authService } from "@/services/authService";
 import styles from "./index.module.css";
-import { usePathname, useRouter } from "next/navigation";
+import { useState} from "react";
+import { useRouter } from "next/navigation";
 export default function MapTemplate({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const isPublicMap = pathname === "/map/public";
+const router = useRouter();
+  const [isPublicMap, setIsPublicMap] = useState(false);
+
   return (
     <div className={styles.pageWrapper}>
       {!isPublicMap && (
+        <>
         <div className={styles.templateButtonWrapper}>
           <Button
             name="Logout"
@@ -23,8 +25,9 @@ export default function MapTemplate({
               router.push("/");
             }}
           />
-          <Button name="My Page" size="s" handleButtonClick={() => router.push("/mypage")} />
+          <Button name="My Page" size="s" handleButtonClick={() => router.push('/mypage')} />
         </div>
+        </>
       )}
       {children}
     </div>
